@@ -49,12 +49,10 @@ app.post('/slash', function(req, res) {
             request({
                 url: url,
                 method: "POST",
-                json: true,
+                json: responseObj,
                 headers: {
                     "content-type": "application/json",
                 },
-                body: JSON.stringify(responseObj)
-
             },
 
             function(error, response, body)
