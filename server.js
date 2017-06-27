@@ -29,7 +29,7 @@ app.post('/slash', function(req, res) {
 
     var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=3&to=0&source=quotes&pages=1";
     var outputString = "";
-    
+
     request(highlightsURL, function (error, response, body) {
         var newBody = "";
         // Trim out random garbage characters in the beginning of the body (non-JSON)
@@ -63,15 +63,15 @@ app.post('/slash', function(req, res) {
 
             // Get a little bit of content before and after the quote
 
-            // var paragraphStart = startOffset-60, paragraphEnd = endOffset+60;
+            var paragraphStart = startOffset-60, paragraphEnd = endOffset+60;
 
-            // if (paragraphStart < 0) paragraphStart = 0;
-            // if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
+            if (paragraphStart < 0) paragraphStart = 0;
+            if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
 
-            // var quoteParagraph = "";
-            // if (paragraphStart != 0) quoteParagraph += "...";
-            // quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
-            // if (endOffset != paragraphEnd) quoteParagraph += "..";
+            var quoteParagraph = "";
+            if (paragraphStart != 0) quoteParagraph += "...";
+            quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
+            if (endOffset != paragraphEnd) quoteParagraph += "..";
 
 
 
