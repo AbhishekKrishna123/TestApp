@@ -42,15 +42,26 @@ app.post('/slash', function(req, res) {
             "text" : "Hello!"
         }
 
-        request.post(
-            response_url,
-            responseObj,
-            function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log(body)
-                }
-            }
-        );
+        request({
+            url: response_url,
+            method: "POST",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(responseObj)
+        }
+
+        // request.post(
+        //     response_url,
+        //     responseObj,
+        //     function (error, response, body) {
+        //         if (!error && response.statusCode == 200) {
+        //             console.log(body)
+        //         }
+        //     }
+        // );
+
 
     // request(highlightsURL, function (error, response, body) {
     //     var newBody = "";
