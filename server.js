@@ -103,7 +103,7 @@ app.post('/slash', function(req, res) {
 
         function sendTest() {
             request({
-                url: url,
+                url: response_url,
                 method: "POST",
                 json: responseObj,
                 headers: {
