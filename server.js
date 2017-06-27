@@ -107,7 +107,7 @@ app.post('/slash', function(req, res) {
             highlightNumber = parseInt(i);
             highlightNumber++;
             // Output
-            outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
+            //outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
 
             // Formatting
             var obj = {
