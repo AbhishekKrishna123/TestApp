@@ -35,17 +35,16 @@ app.post('/slash', function(req, res) {
 
     var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=3&to=0&source=quotes&pages=1";
     var output = '' ;//= req.body.response_url + ", ";
-    var response_url =  req.body.response_url;
+    var url =  req.body.response_url;
 
     var responseObj = {
             "response_type" : "ephemeral",
             "text" : "Hello!"
         }
 
-        res.status(200).send('Processing...');
-
+        
         request({
-            url: response_url,
+            url: url,
             method: "POST",
             json: true,
             headers: {
@@ -53,6 +52,9 @@ app.post('/slash', function(req, res) {
             },
             body: JSON.stringify(responseObj)
         });
+
+        res.status(200).send('Processing...');
+
 
         // request.post(
         //     response_url,
