@@ -1,6 +1,6 @@
 ﻿var express = require('express');
 var app = express();
-var port = process.env.port || 1337
+var port = process.env.port || 1337;
 
 const jsdom = require("jsdom");
 const {JSDOM} = jsdom;
@@ -9,7 +9,7 @@ var jsonq=require("jsonq");
 var jquery = require("jquery");
 var bodyParser     =         require("body-parser");
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false }) // THIS LINE WAS ADDED
+var urlencodedParser = bodyParser.urlencoded({ extended: false }); // THIS LINE WAS ADDED
 
 app.use(urlencodedParser); //bodyParser.urlencoded({ extended: false }) was removed 
 app.use(bodyParser.json());
@@ -106,13 +106,8 @@ app.post('/slash', function(req, res) {
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
-<<<<<<< HEAD
-                "text": "`" + quote + "`",
-                "callback-id" : "button-trial",
-=======
                 "text": "`" + quoteParagraph + "`",
                 "callback_id" : "button-trial",
->>>>>>> 77938edb0e5f6c2b2b79165b00d82a415effc3d2
                 "mrkdwn_in": [
                     "text",
                     "pretext"
