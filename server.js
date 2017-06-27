@@ -82,7 +82,7 @@ app.post('/slash', function(req, res) {
     //         //console.log(outputString);
     //     }
     // });
-    res.send(highlightsURL);
+    res.send("Hello!");
 });
 
 var server = app.listen(port, function () {
