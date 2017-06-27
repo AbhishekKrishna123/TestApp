@@ -84,7 +84,8 @@ app.post('/slash', function(req, res) {
             // Get a little bit of content before and after the quote
 
             var offset = 50;
-            var paragraphStart = startOffset-offset, paragraphEnd = endOffset+offset;
+            var paragraphStart = parseInt(startOffset) - offset;
+            var paragraphEnd = parseInt(endOffset) + offset;
             
             if (paragraphStart < 0) paragraphStart = 0;
             //if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
