@@ -180,6 +180,11 @@ app.post('/slash', function(req, res) {
 app.post('/actions', function(req, res){
 
     //res.status(200).end()
+    if (reqBody.token != YOUR_APP_VERIFICATION_TOKEN){
+        res.status(403).end("Access forbidden")
+    }
+
+    else{
     var clickresp = {
 
         "text" : "Your message",
@@ -201,6 +206,7 @@ app.post('/actions', function(req, res){
             });
 
         }
+    }
 
 
 });
