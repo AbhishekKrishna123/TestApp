@@ -150,3 +150,8 @@ app.get('/setup', function (req, res) {
     //res.send('Setup page');
     InitialSetup.Setup(req, res);
 });
+
+app.get('./entity', function(req, res) {
+    var entity = require("./entity");
+    entity.getEntity(req, res);
+});
