@@ -7,7 +7,7 @@ const {JSDOM} = jsdom;
 var request = require("request");
 var jsonq=require("jsonq");
 var jquery = require("jquery");
-var bodyParser     =         require("body-parser");
+var bodyParser     =         require("body-parser");
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false }) // THIS LINE WAS ADDED
 
@@ -46,11 +46,11 @@ app.post('/slash', function(req, res) {
     res.send(
         {
             "response_type": "ephemeral", //THIS WAS CHANGED
-            "text": "Highlights are coming up.."
+            "text": "Highlights are coming up..."
         }
     );
 
-    request(highlightsURL, function (error, response, body) {
+    request(highlightsURL, function (error, response, body) {
         var newBody = "";
         // Trim out random garbage characters in the beginning of the body (non-JSON)
         for (var i=16; i<body.length; i++) {
@@ -83,8 +83,7 @@ app.post('/slash', function(req, res) {
 
             // Get a little bit of content before and after the quote
 
-            var offset = 60;
-            var paragraphStart = startOffset-offset, paragraphEnd = endOffset+offset;
+            var paragraphStart = startOffset-60, paragraphEnd = endOffset+60;
 
             if (paragraphStart < 0) paragraphStart = 0;
             if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
@@ -94,18 +93,17 @@ app.post('/slash', function(req, res) {
             quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
             if (endOffset != paragraphEnd) quoteParagraph += "..";
 
-            var startingPart = quoteParagraphString.substring(paragraphStart, startOffset);
-            var endingPart = quoteParagraphString.substring(endOffset, paragraphEnd);
+
 
             highlightNumber = parseInt(i);
             highlightNumber++;
             // Output
-            //outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
+            outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
 
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
-                "text": "_" + startingPart + "`" + quote +  "`" + endingPart + "_",
+                "text": "`" + quoteParagraph + "`",
                 "mrkdwn_in": [
                     "text",
                     "pretext"
@@ -131,7 +129,6 @@ app.post('/slash', function(req, res) {
         var responseObj = {
             "response_type" : "ephemeral", // THIS WAS CHANGED
             "text" : "Here are your highlights:",
-            "callback_id": "button_trial",
             "attachments": attachmentsObj
         }
 
@@ -184,26 +181,11 @@ app.post('/actions', function(req, res){
     res.status(200).end()
     var clickresp = {
 
-        "text" : "Your message is here.",
+        "text" : "Your message",
         "replace_original" : false
     }
 
-    sendTest2(clickresp);
-
-    function sendTest2(JSONmsg/*CHANGED*/) {
-            request({
-                url: response_url,
-                method: "POST",
-                json: JSONmsg, //CHANGED
-                headers: {
-                    "content-type": "application/json",
-                },
-            }, function(error, response, body)
-            {
-            });
-
-        }
-
+    sendTest(clickresp);
 
 
 });
