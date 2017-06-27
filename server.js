@@ -129,6 +129,7 @@ app.post('/slash', function(req, res) {
         var responseObj = {
             "response_type" : "ephemeral", // THIS WAS CHANGED
             "text" : "Here are your highlights:",
+            "callback_id": "button_trial",
             "attachments": attachmentsObj
         }
 
