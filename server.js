@@ -39,7 +39,7 @@ app.post('/slash', function(req, res) {
 
     res.send(
         {
-            "response_type": "in_channel",
+            "response_type": "ephemeral", //THIS WAS CHANGED
             "text": "Highlights are coming up..."
         }
     );
@@ -101,7 +101,17 @@ app.post('/slash', function(req, res) {
                 "mrkdwn_in": [
                     "text",
                     "pretext"
-                ]
+                ],
+                "color": "#3AA3E3",        // THIS AND THE NEXT PARAMETER WERE ADDED
+                "actions": [
+                {
+                    "name": "PostAction",
+                    "text": "Post",
+                    "type": "button",
+                    "value": "post"
+                }
+            ]
+
             };
 
             attachmentsObj.push(obj);
@@ -111,7 +121,7 @@ app.post('/slash', function(req, res) {
         }
         
         var responseObj = {
-            "response_type" : "in_channel",
+            "response_type" : "ephemeral", // THIS WAS CHANGED
             "text" : "Here are your highlights:",
             "attachments": attachmentsObj
         }
