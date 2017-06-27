@@ -187,7 +187,22 @@ app.post('/actions', function(req, res){
         "replace_original" : false
     }
 
-    sendTest(clickresp);
+    sendTest2(clickresp);
+
+    function sendTest2(JSONmsg/*CHANGED*/) {
+            request({
+                url: response_url,
+                method: "POST",
+                json: JSONmsg, //CHANGED
+                headers: {
+                    "content-type": "application/json",
+                },
+            }, function(error, response, body)
+            {
+            });
+
+        }
+
 
 
 });
