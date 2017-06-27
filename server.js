@@ -46,7 +46,7 @@ app.post('/slash', function(req, res) {
     res.send(
         {
             "response_type": "ephemeral", //THIS WAS CHANGED
-            "text": "Highlights are coming up..."
+            "text": "Highlights are coming up.."
         }
     );
 
