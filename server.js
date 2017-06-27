@@ -42,6 +42,8 @@ app.post('/slash', function(req, res) {
             "text" : "Hello!"
         }
 
+        res.status(200).send();
+
         request({
             url: response_url,
             method: "POST",
