@@ -16,6 +16,8 @@ module.exports = {
             MediumName = req.query.MediumName;
             profileURL = "https://medium.com/@" + MediumName;
 
+            res.send(profileURL);
+
             console.log(profileURL);
 
             JSDOM.fromURL(profileURL).then(dom => {
