@@ -28,7 +28,8 @@ app.get('/test', function(req, res) {
 app.post('/slash', function(req, res) {
 
     var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=3&to=0&source=quotes&pages=1";
-
+    var outputString = "";
+    
     request(highlightsURL, function (error, response, body) {
         var newBody = "";
         // Trim out random garbage characters in the beginning of the body (non-JSON)
@@ -44,7 +45,7 @@ app.post('/slash', function(req, res) {
 
         //console.log(numPosts + " most recent highlights by " + userName + " (@" + userHandle + ")");
 
-        var outputString = "";
+        
 
         for (var i = 0; i < quoteID.length; i++) {
             var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
