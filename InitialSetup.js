@@ -4,7 +4,6 @@
 
 module.exports = {
     Setup: function (req, res) {
-        res.send("Function called!");
 
         const jsdom = require("jsdom");
         const {JSDOM} = jsdom;
