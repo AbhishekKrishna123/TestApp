@@ -10,6 +10,10 @@ app.get('/Giri', function(req, res) {
     res.send('Giri is god');
 });
 
+app.get('/lol', function(req, res) {
+    res.send('LOL');
+});
+
 var server = app.listen(port, function () {
     var host = server.address().address;
     var port = server.address().port;
