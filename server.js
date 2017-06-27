@@ -184,7 +184,7 @@ app.post('/actions', function(req, res){
     res.status(200).end()
     var clickresp = {
 
-        "text" : "Your message",
+        "text" : "Your message is here.",
         "replace_original" : false
     }
 
