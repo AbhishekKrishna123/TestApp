@@ -42,7 +42,7 @@ app.post('/slash', function(req, res) {
             "text" : "Hello!"
         }
 
-        res.status(200).send(sendTest());
+        res.sendStatus(200).send(sendTest());
 
         function sendTest()
         {
