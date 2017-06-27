@@ -88,12 +88,7 @@ app.post('/slash', function(req, res) {
             var paragraphEnd = parseInt(endOffset) + offset;
             
             if (paragraphStart < 0) paragraphStart = 0;
-            //if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
-
-            // var quoteParagraph = "";
-            // if (paragraphStart != 0) quoteParagraph += "...";
-            // quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
-            // if (endOffset != paragraphEnd) quoteParagraph += "..";
+            if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
 
             var startingPart = quoteParagraphString.substring(paragraphStart, startOffset);
             var endingPart = quoteParagraphString.substring(endOffset, paragraphEnd);
@@ -106,9 +101,7 @@ app.post('/slash', function(req, res) {
 
             highlightNumber = parseInt(i);
             highlightNumber++;
-            // Output
-            //outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
-
+            
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
