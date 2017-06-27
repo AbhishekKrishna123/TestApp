@@ -31,8 +31,6 @@ module.exports = {
                 console.log(MediumUserID);
                 console.log(DisplayName);
 
-                res.send(MediumUserID + ", " + DisplayName);
-
                 ////////////////////////////////////////////////
                 // Save the details to the User Table in Azure //
                 ////////////////////////////////////////////////
