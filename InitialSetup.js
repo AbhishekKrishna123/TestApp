@@ -54,6 +54,17 @@ module.exports = {
                             res.send("Successfully inserted");
                           }
                           else {
+                            tableSvc.retrieveEntity('TestTable', 'User', MediumName, function(error, result, response){
+                                if(!error){
+                                    response.send(response);
+                                    // result contains the entity
+                                    response.send(result.MediumUserID + ", " + result.DisplayName);
+                                }
+                                else {
+                                    response.send(response);
+                                }
+                            });
+
                               res.send(response);
                           }
                         });
