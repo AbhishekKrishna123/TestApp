@@ -27,8 +27,10 @@ app.get('/test', function(req, res) {
 
 app.post('/slash', function(req, res) {
 
+
+
     var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=3&to=0&source=quotes&pages=1";
-    var outputString = "";
+    var output = req.query.response_url + ", ";
 
     request(highlightsURL, function (error, response, body) {
         var newBody = "";
@@ -80,9 +82,10 @@ app.post('/slash', function(req, res) {
             // Output
             outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
 
+            output += outputString;
             //console.log(outputString);
         }
-        res.send(outputString);
+        res.send(output);
     });
 });
 
