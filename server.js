@@ -96,11 +96,11 @@ app.post('/slash', function(req, res) {
 
             // Formatting
             var obj = {
-                "title": "Highlight #" + highlightNumber + " from \"" + postName + "\" by \"*" + postAuthor + "*",
+                "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
                 "text": "`" + quoteParagraph + "`",
                 "mrkdwn_in": [
                     "text",
-                    "title"
+                    "pretext"
                 ]
             };
 
