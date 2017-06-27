@@ -20,7 +20,7 @@ app.get('/test', function(req, res) {
 });
 
 app.post('/slash', function(req, res) {
-    res.send("Hello from Slash command!");
+    res.send("Hello, from Slash command!");
 });
 
 var server = app.listen(port, function () {
