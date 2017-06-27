@@ -105,7 +105,7 @@ app.post('/slash', function(req, res) {
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
-                "text": "_" + startingPart + "`" + quote +  "`" + endingPart + "_",
+                "text": startingPart + "`" + quote +  "`" + endingPart,
                 "mrkdwn_in": [
                     "text",
                     "pretext"
