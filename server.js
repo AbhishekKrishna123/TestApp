@@ -50,7 +50,7 @@ app.post('/slash', function(req, res) {
                 "content-type": "application/json",
             },
             body: JSON.stringify(responseObj)
-        }
+        });
 
         // request.post(
         //     response_url,
