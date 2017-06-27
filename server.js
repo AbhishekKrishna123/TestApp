@@ -38,22 +38,6 @@ app.post('/slash', function(req, res) {
     var response_url =  req.body.response_url;
 
     res.sendStatus(200);
-    
-    function sendTest() {
-        request({
-            url: url,
-            method: "POST",
-            json: responseObj,
-            headers: {
-                "content-type": "application/json",
-            },
-        }, function(error, response, body)
-        {
-        });
-
-    }
-
-
 
     request(highlightsURL, function (error, response, body) {
         var newBody = "";
@@ -110,9 +94,21 @@ app.post('/slash', function(req, res) {
         }
         
         var responseObj = {
-
             "response_type" : "ephemeral",
             "text" : output
+        }
+
+        function sendTest() {
+            request({
+                url: url,
+                method: "POST",
+                json: responseObj,
+                headers: {
+                    "content-type": "application/json",
+                },
+            }, function(error, response, body)
+            {
+            });
 
         }
 
