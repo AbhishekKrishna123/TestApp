@@ -36,7 +36,12 @@ app.post('/slash', function(req, res) {
     var output = '' ;//= req.body.response_url + ", ";
     var response_url =  req.body.response_url;
 
-    res.send("Highlights are coming up...");
+    res.send(
+        {
+            "response_type": "in_channel",
+            "text": "Highlights are coming up..."
+        }
+    );
 
     request(highlightsURL, function (error, response, body) {
         var newBody = "";
