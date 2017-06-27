@@ -5,8 +5,6 @@ module.exports = {
 
         var tableSvc = azure.createTableService();
 
-        response.send("Hello");
-
         tableSvc.retrieveEntity('TestTable', 'User', request.query.MediumName, function(error, result, response){
             if(!error){
                 response.send(response);
