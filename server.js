@@ -14,6 +14,11 @@ app.get('/lol', function(req, res) {
     res.send('LOL');
 });
 
+app.get('/test', function(req, res) {
+    var name = req.query.name;
+    res.send("Hello " + name);
+});
+
 var server = app.listen(port, function () {
     var host = server.address().address;
     var port = server.address().port;
