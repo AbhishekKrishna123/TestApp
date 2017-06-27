@@ -83,8 +83,9 @@ app.post('/slash', function(req, res) {
 
             // Get a little bit of content before and after the quote
 
-            var paragraphStart = startOffset-60, paragraphEnd = endOffset+60;
-
+            var offset = 50;
+            var paragraphStart = startOffset-offset, paragraphEnd = endOffset+offset;
+            
             if (paragraphStart < 0) paragraphStart = 0;
             if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
 
@@ -93,6 +94,8 @@ app.post('/slash', function(req, res) {
             quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
             if (endOffset != paragraphEnd) quoteParagraph += "..";
 
+            var startingPart = quoteParagraphString.substring(paragraphStart, startOffset);
+            var endingPart = quoteParagraphString.substring(endOffset, paragraphEnd);
 
 
             highlightNumber = parseInt(i);
@@ -103,7 +106,7 @@ app.post('/slash', function(req, res) {
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
-                "text": "`" + quoteParagraph + "`",
+                "text": "`" + quote + "`",
                 "callback-id" : "button-trial",
                 "mrkdwn_in": [
                     "text",
