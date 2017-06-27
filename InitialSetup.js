@@ -35,7 +35,7 @@ module.exports = {
                 // Save the details to the User Table in Azure //
                 ////////////////////////////////////////////////
                 var tableSvc = azure.createTableService();
-                console.log("Table service created.");
+                res.send("Table service created.");
                 // Create table if it doesn't exist
                 tableSvc.createTableIfNotExists('MediumHighlights', function(error, result, response){
                     if(!error){
