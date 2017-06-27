@@ -31,19 +31,7 @@ app.get('/test', function(req, res) {
     res.send("Hello " + name);
 });
 
-app.post('/actions', function(req, res){
 
-    res.status(200).end()
-    var clickresp = {
-
-        "text" : "Your message",
-        "replace_original" : false
-    }
-
-    sendTest(clickresp);
-
-
-});
 
 
 
@@ -187,6 +175,20 @@ function sendTest(JSONmsg/*CHANGED*/) {
             });
 
 }
+
+app.post('/actions', function(req, res){
+
+    res.status(200).end()
+    var clickresp = {
+
+        "text" : "Your message",
+        "replace_original" : false
+    }
+
+    sendTest(clickresp);
+
+
+});
 
 
 var server = app.listen(port, function () {
