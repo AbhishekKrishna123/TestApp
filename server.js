@@ -99,7 +99,7 @@ app.post('/slash', function(req, res) {
             var endingPart = quoteParagraphString.substring(endOffset, paragraphEnd);
 
             var finalText = "";
-            if (paragraphStart != 0) finaltext += "...";
+            if (paragraphStart != 0) finalText += "...";
             finalText += startingPart + "*_" + quote + "_*" + endingPart;
             if (endOffset != paragraphEnd) finalText += "..";
 
