@@ -31,9 +31,8 @@ app.get('/test', function(req, res) {
 
 app.post('/slash', function(req, res) {
 
-
-
-    var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=3&to=0&source=quotes&pages=1";
+    var numPosts = req.body.text || 1;
+    var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=" + numPosts + "3&to=0&source=quotes&pages=1";
     var output = '' ;//= req.body.response_url + ", ";
     var response_url =  req.body.response_url;
 
@@ -94,7 +93,7 @@ app.post('/slash', function(req, res) {
         }
         
         var responseObj = {
-            "response_type" : "ephemeral",
+            "response_type" : "in_channel",
             "text" : output
         }
 
