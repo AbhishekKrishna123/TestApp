@@ -87,7 +87,7 @@ app.post('/slash', function(req, res) {
             var paragraphStart = startOffset-offset, paragraphEnd = endOffset+offset;
             
             if (paragraphStart < 0) paragraphStart = 0;
-            if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
+            //if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
 
             var quoteParagraph = "";
             if (paragraphStart != 0) quoteParagraph += "...";
