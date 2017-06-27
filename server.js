@@ -35,6 +35,7 @@ app.post('/slash', function(req, res) {
     var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=" + numPosts + "&to=0&source=quotes&pages=1";
     var output = '' ;//= req.body.response_url + ", ";
     var response_url =  req.body.response_url;
+    var attachmentsObj = [];
 
     res.send(
         {
@@ -93,13 +94,26 @@ app.post('/slash', function(req, res) {
             // Output
             outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
 
+            // Formatting
+            var obj = {
+                "title": "Highlight #" + highlightNumber + " from \"" + postName + "\" by \"*" + postAuthor + "*",
+                "text": "`" + quoteParagraph + "`",
+                "mrkdwn_in": [
+                    "text",
+                    "title"
+                ]
+            };
+
+            attachmentsObj.push(obj);
+
             output += outputString;
             //console.log(outputString);
         }
         
         var responseObj = {
             "response_type" : "in_channel",
-            "text" : output
+            "text" : "Here are your highlights:",
+            "attachments": attachmentsObj
         }
 
         sendTest();
