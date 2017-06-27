@@ -37,8 +37,7 @@ app.post('/slash', function(req, res) {
     var output = '' ;//= req.body.response_url + ", ";
     var response_url =  req.body.response_url;
 
-    res.send("Processing your request...");
-    res.send("One more response!");
+    res.send("Response URL" + response_url);
 
     request(highlightsURL, function (error, response, body) {
         var newBody = "";
