@@ -142,3 +142,11 @@ var server = app.listen(port, function () {
 
     console.log('Example app listening at http://%s:%s', host, port);
 });
+
+
+
+app.get('/setup', function (req, res) {
+    var InitialSetup = require("./InitialSetup");
+    InitialSetup.Setup(req, res);
+    //res.send('Setup page');
+});
