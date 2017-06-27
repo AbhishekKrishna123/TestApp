@@ -37,65 +37,9 @@ app.post('/slash', function(req, res) {
     var output = '' ;//= req.body.response_url + ", ";
     var response_url =  req.body.response_url;
 
-    request(highlightsURL, function (error, response, body) {
-        var newBody = "";
-        // Trim out random garbage characters in the beginning of the body (non-JSON)
-        for (var i=16; i<body.length; i++) {
-            newBody += body[i];
-        }
-
-        // Convert to a JSON object for using jsonQ functions
-        var object = jsonq(newBody);
-
-        // Find all quoteIDs
-        var quoteID = object.find('payload').find('references').find('quoteId').value();
-
-        //console.log(numPosts + " most recent highlights by " + userName + " (@" + userHandle + ")");
-
-        
-
-        for (var i = 0; i < quoteID.length; i++) {
-            var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
-            var postName = object.find('payload').find('references').find('Post').find(postID).find('title').value();
-            var postAuthorID = object.find('payload').find('references').find('Post').find(postID).find('creatorId').value();
-            var postAuthor = object.find('payload').find('references').find('User').find(postAuthorID).find('name').value();
-            var quoteParagraphRaw = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('paragraphs').find('text').value();
-            var startOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('startOffset').value();
-            var endOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('endOffset').value();
-
-            // Convert the array to a string
-            var quoteParagraphString = quoteParagraphRaw.join("");
-            // Get only the highlighted section
-            var quote = quoteParagraphString.substring(startOffset, endOffset)
-
-            // Get a little bit of content before and after the quote
-
-            var paragraphStart = startOffset-60, paragraphEnd = endOffset+60;
-
-            if (paragraphStart < 0) paragraphStart = 0;
-            if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
-
-            var quoteParagraph = "";
-            if (paragraphStart != 0) quoteParagraph += "...";
-            quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
-            if (endOffset != paragraphEnd) quoteParagraph += "..";
-
-
-
-            highlightNumber = parseInt(i);
-            highlightNumber++;
-            // Output
-            outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
-
-            output += outputString;
-            //console.log(outputString);
-        }
-        
-        var responseObj = {
-
+    var responseObj = {
             "response_type" : "ephemeral",
-            "text" : output
-
+            "text" : "Hello!"
         }
 
         request.post(
@@ -108,7 +52,78 @@ app.post('/slash', function(req, res) {
             }
         );
 
-    });
+    // request(highlightsURL, function (error, response, body) {
+    //     var newBody = "";
+    //     // Trim out random garbage characters in the beginning of the body (non-JSON)
+    //     for (var i=16; i<body.length; i++) {
+    //         newBody += body[i];
+    //     }
+
+    //     // Convert to a JSON object for using jsonQ functions
+    //     var object = jsonq(newBody);
+
+    //     // Find all quoteIDs
+    //     var quoteID = object.find('payload').find('references').find('quoteId').value();
+
+    //     //console.log(numPosts + " most recent highlights by " + userName + " (@" + userHandle + ")");
+
+        
+
+    //     for (var i = 0; i < quoteID.length; i++) {
+    //         var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
+    //         var postName = object.find('payload').find('references').find('Post').find(postID).find('title').value();
+    //         var postAuthorID = object.find('payload').find('references').find('Post').find(postID).find('creatorId').value();
+    //         var postAuthor = object.find('payload').find('references').find('User').find(postAuthorID).find('name').value();
+    //         var quoteParagraphRaw = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('paragraphs').find('text').value();
+    //         var startOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('startOffset').value();
+    //         var endOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('endOffset').value();
+
+    //         // Convert the array to a string
+    //         var quoteParagraphString = quoteParagraphRaw.join("");
+    //         // Get only the highlighted section
+    //         var quote = quoteParagraphString.substring(startOffset, endOffset)
+
+    //         // Get a little bit of content before and after the quote
+
+    //         var paragraphStart = startOffset-60, paragraphEnd = endOffset+60;
+
+    //         if (paragraphStart < 0) paragraphStart = 0;
+    //         if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
+
+    //         var quoteParagraph = "";
+    //         if (paragraphStart != 0) quoteParagraph += "...";
+    //         quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
+    //         if (endOffset != paragraphEnd) quoteParagraph += "..";
+
+
+
+    //         highlightNumber = parseInt(i);
+    //         highlightNumber++;
+    //         // Output
+    //         outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
+
+    //         output += outputString;
+    //         //console.log(outputString);
+    //     }
+        
+    //     var responseObj = {
+
+    //         "response_type" : "ephemeral",
+    //         "text" : output
+
+    //     }
+
+    //     request.post(
+    //         response_url,
+    //         responseObj,
+    //         function (error, response, body) {
+    //             if (!error && response.statusCode == 200) {
+    //                 console.log(body)
+    //             }
+    //         }
+    //     );
+
+    // });
 });
 
 var server = app.listen(port, function () {
