@@ -39,7 +39,7 @@ module.exports = {
                 // Create table if it doesn't exist
                 tableSvc.createTableIfNotExists('TestTable', function(error, result, response){
                     if(!error){
-                        res.send("Table created.");
+                        //res.send("Table created.");
                         // Create an entity
                         var newUser = {
                             PartitionKey: {'_':'User'},
