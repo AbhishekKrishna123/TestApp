@@ -107,8 +107,7 @@ app.post('/slash', function(req, res) {
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
-                "text": startingPart + "`" + quote + "`" + endingPart + "\nDebug data: startOffset: " + startOffset + ", paraStart: " + paragraphStart + ", paraEnd: " + paragraphEnd +
-                        ", endOffset: " + endOffset + ", String length: " + quoteParagraphString.length,
+                "text": ">" + startingPart + "`" + quote + "`" + endingPart,
                 "callback_id" : "button-trial",
                 "mrkdwn_in": [
                     "text",
