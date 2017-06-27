@@ -179,7 +179,7 @@ app.post('/slash', function(req, res) {
 
 app.post('/actions', function(req, res){
 
-    res.status(200).end()
+    //res.status(200).end()
     var clickresp = {
 
         "text" : "Your message",
