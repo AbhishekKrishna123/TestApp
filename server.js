@@ -82,8 +82,8 @@ app.post('/slash', function(req, res) {
 
             //console.log(outputString);
         }
+        res.send(outputString);
     });
-    res.send(outputString);
 });
 
 var server = app.listen(port, function () {
