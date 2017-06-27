@@ -30,58 +30,58 @@ app.post('/slash', function(req, res) {
     var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=3&to=0&source=quotes&pages=1";
 
     request(highlightsURL, function (error, response, body) {
+        var newBody = "";
+        // Trim out random garbage characters in the beginning of the body (non-JSON)
+        for (var i=16; i<body.length; i++) {
+            newBody += body[i];
+        }
 
-    var newBody = "";
-    // Trim out random garbage characters in the beginning of the body (non-JSON)
-    for (var i=16; i<body.length; i++) {
-        newBody += body[i];
-    }
+        // Convert to a JSON object for using jsonQ functions
+        var object = jsonq(newBody);
 
-    // Convert to a JSON object for using jsonQ functions
-    var object = jsonq(newBody);
+        // Find all quoteIDs
+        var quoteID = object.find('payload').find('references').find('quoteId').value();
 
-    // Find all quoteIDs
-    var quoteID = object.find('payload').find('references').find('quoteId').value();
+        //console.log(numPosts + " most recent highlights by " + userName + " (@" + userHandle + ")");
 
-    //console.log(numPosts + " most recent highlights by " + userName + " (@" + userHandle + ")");
+        var outputString = "";
 
-    var outputString = "";
+        for (var i = 0; i < quoteID.length; i++) {
+            var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
+            var postName = object.find('payload').find('references').find('Post').find(postID).find('title').value();
+            var postAuthorID = object.find('payload').find('references').find('Post').find(postID).find('creatorId').value();
+            var postAuthor = object.find('payload').find('references').find('User').find(postAuthorID).find('name').value();
+            var quoteParagraphRaw = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('paragraphs').find('text').value();
+            var startOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('startOffset').value();
+            var endOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('endOffset').value();
 
-    for (var i = 0; i < quoteID.length; i++) {
-        var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
-        var postName = object.find('payload').find('references').find('Post').find(postID).find('title').value();
-        var postAuthorID = object.find('payload').find('references').find('Post').find(postID).find('creatorId').value();
-        var postAuthor = object.find('payload').find('references').find('User').find(postAuthorID).find('name').value();
-        var quoteParagraphRaw = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('paragraphs').find('text').value();
-        var startOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('startOffset').value();
-        var endOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('endOffset').value();
+            // Convert the array to a string
+            var quoteParagraphString = quoteParagraphRaw.join("");
+            // Get only the highlighted section
+            var quote = quoteParagraphString.substring(startOffset, endOffset)
 
-        // Convert the array to a string
-        var quoteParagraphString = quoteParagraphRaw.join("");
-        // Get only the highlighted section
-        var quote = quoteParagraphString.substring(startOffset, endOffset)
+            // Get a little bit of content before and after the quote
 
-        // Get a little bit of content before and after the quote
+            // var paragraphStart = startOffset-60, paragraphEnd = endOffset+60;
 
-        // var paragraphStart = startOffset-60, paragraphEnd = endOffset+60;
+            // if (paragraphStart < 0) paragraphStart = 0;
+            // if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
 
-        // if (paragraphStart < 0) paragraphStart = 0;
-        // if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
-
-        // var quoteParagraph = "";
-        // if (paragraphStart != 0) quoteParagraph += "...";
-        // quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
-        // if (endOffset != paragraphEnd) quoteParagraph += "..";
-
+            // var quoteParagraph = "";
+            // if (paragraphStart != 0) quoteParagraph += "...";
+            // quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
+            // if (endOffset != paragraphEnd) quoteParagraph += "..";
 
 
-        highlightNumber = parseInt(i);
-        highlightNumber++;
-        // Output
-        outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
 
-        //console.log(outputString);
-    }
+            highlightNumber = parseInt(i);
+            highlightNumber++;
+            // Output
+            outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
+
+            //console.log(outputString);
+        }
+    });
     res.send(outputString);
 });
 
