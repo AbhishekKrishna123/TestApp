@@ -8,6 +8,8 @@ module.exports = {
         var query = new azure.TableQuery()
         .top(5)
         .where('PartitionKey eq ?', 'User');
+
+        response.send("Blah");
         
         tableSvc.queryEntities('TestTable', query, null, function(error, result, response) {
             if(!error) {
