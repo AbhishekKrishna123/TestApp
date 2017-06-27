@@ -134,19 +134,19 @@ app.post('/slash', function(req, res) {
 
         sendTest(responseObj); //CHANGED
 
-        // function sendTest(JSONmsg/*CHANGED*/) {
-        //     request({
-        //         url: response_url,
-        //         method: "POST",
-        //         json: JSONmsg, //CHANGED
-        //         headers: {
-        //             "content-type": "application/json",
-        //         },
-        //     }, function(error, response, body)
-        //     {
-        //     });
+        function sendTest(JSONmsg/*CHANGED*/) {
+            request({
+                url: response_url,
+                method: "POST",
+                json: JSONmsg, //CHANGED
+                headers: {
+                    "content-type": "application/json",
+                },
+            }, function(error, response, body)
+            {
+            });
 
-        // }
+        }
 
         // function postMsg(){
         //     request({
@@ -162,19 +162,19 @@ app.post('/slash', function(req, res) {
     });
 });
 
-function sendTest(JSONmsg/*CHANGED*/) {
-            request({
-                url: response_url,
-                method: "POST",
-                json: JSONmsg, //CHANGED
-                headers: {
-                    "content-type": "application/json",
-                },
-            }, function(error, response, body)
-            {
-            });
+// function sendTest(JSONmsg/*CHANGED*/) {
+//             request({
+//                 url: response_url,
+//                 method: "POST",
+//                 json: JSONmsg, //CHANGED
+//                 headers: {
+//                     "content-type": "application/json",
+//                 },
+//             }, function(error, response, body)
+//             {
+//             });
 
-}
+// }
 
 app.post('/actions', function(req, res){
 
