@@ -9,7 +9,9 @@ var jsonq=require("jsonq");
 var jquery = require("jquery");
 var bodyParser     =         require("body-parser");
 
-app.use(bodyParser.urlencoded({ extended: false }));
+var urlencodedParser = bodyParser.urlencoded({ extended: false }) // THIS LINE WAS ADDED
+
+app.use(urlencodedParser); //bodyParser.urlencoded({ extended: false }) was removed 
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
@@ -28,6 +30,22 @@ app.get('/test', function(req, res) {
     var name = req.query.name;
     res.send("Hello " + name);
 });
+
+app.post('/actions', function(req, res){
+
+    res.status(200).end()
+    var clickresp = {
+
+        "text" : "Your message",
+        "replace_original" : false
+    }
+
+    sendTest(clickresp);
+
+
+});
+
+
 
 app.post('/slash', function(req, res) {
 
@@ -106,7 +124,7 @@ app.post('/slash', function(req, res) {
                 "actions": [
                 {
                     "name": "PostAction",
-                    "text": "Post",
+                    "text": "Send as message",
                     "type": "button",
                     "value": "post"
                 }
@@ -126,13 +144,41 @@ app.post('/slash', function(req, res) {
             "attachments": attachmentsObj
         }
 
-        sendTest();
+        sendTest(responseObj); //CHANGED
 
-        function sendTest() {
+        // function sendTest(JSONmsg/*CHANGED*/) {
+        //     request({
+        //         url: response_url,
+        //         method: "POST",
+        //         json: JSONmsg, //CHANGED
+        //         headers: {
+        //             "content-type": "application/json",
+        //         },
+        //     }, function(error, response, body)
+        //     {
+        //     });
+
+        // }
+
+        // function postMsg(){
+        //     request({
+        //         url: response_url,
+        //         method: "POST",
+        //         json: {
+        //             "response_type" : "in_channel"
+        //         }
+        //     })
+        // }
+
+        
+    });
+});
+
+function sendTest(JSONmsg/*CHANGED*/) {
             request({
                 url: response_url,
                 method: "POST",
-                json: responseObj,
+                json: JSONmsg, //CHANGED
                 headers: {
                     "content-type": "application/json",
                 },
@@ -140,11 +186,8 @@ app.post('/slash', function(req, res) {
             {
             });
 
-        }
+}
 
-        
-    });
-});
 
 var server = app.listen(port, function () {
     var host = server.address().address;
