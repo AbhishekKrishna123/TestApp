@@ -37,7 +37,22 @@ app.post('/slash', function(req, res) {
     var output = '' ;//= req.body.response_url + ", ";
     var response_url =  req.body.response_url;
 
+    res.sendStatus(200);
     
+    function sendTest() {
+        request({
+            url: url,
+            method: "POST",
+            json: responseObj,
+            headers: {
+                "content-type": "application/json",
+            },
+        }, function(error, response, body)
+        {
+        });
+
+    }
+
 
 
     request(highlightsURL, function (error, response, body) {
@@ -101,22 +116,7 @@ app.post('/slash', function(req, res) {
 
         }
 
-        res.sendStatus(200).send(sendTest());
-
-        function sendTest() {
-            request({
-                url: url,
-                method: "POST",
-                json: responseObj,
-                headers: {
-                    "content-type": "application/json",
-                },
-            }, function(error, response, body)
-            {
-            });
-
-        }
-
+        res.send(sendTest());
     });
 });
 
