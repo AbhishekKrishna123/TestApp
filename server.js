@@ -106,8 +106,13 @@ app.post('/slash', function(req, res) {
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
+<<<<<<< HEAD
                 "text": "`" + quote + "`",
                 "callback-id" : "button-trial",
+=======
+                "text": "`" + quoteParagraph + "`",
+                "callback_id" : "button-trial",
+>>>>>>> 77938edb0e5f6c2b2b79165b00d82a415effc3d2
                 "mrkdwn_in": [
                     "text",
                     "pretext"
@@ -182,14 +187,28 @@ app.post('/slash', function(req, res) {
 
 app.post('/actions', function(req, res){
 
-    res.status(200).end()
+    //res.status(200).end()
     var clickresp = {
 
         "text" : "Your message",
-        "replace_original" : false
+        "replace_original" : true
     }
 
-    sendTest(clickresp);
+    sendTest2(clickresp);
+
+    function sendTest2(JSONmsg/*CHANGED*/) {
+            request({
+                url: response_url,
+                method: "POST",
+                json: JSONmsg, //CHANGED
+                headers: {
+                    "content-type": "application/json",
+                },
+            }, function(error, response, body)
+            {
+            });
+
+        }
 
 
 });
