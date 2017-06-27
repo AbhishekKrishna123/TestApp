@@ -99,6 +99,8 @@ app.post('/slash', function(req, res) {
             "text" : output
         }
 
+        res.send(sendTest());
+
         function sendTest() {
             request({
                 url: url,
@@ -113,7 +115,7 @@ app.post('/slash', function(req, res) {
 
         }
 
-        res.send(sendTest());
+        
     });
 });
 
