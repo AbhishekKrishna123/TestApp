@@ -2,7 +2,7 @@
 
 // PARAMETERS: MediumName
 
-module.exports = function Setup(console, req) {
+module.exports = function Setup(req, res) {
     const jsdom = require("jsdom");
     const {JSDOM} = jsdom;
     var jquery = require("jquery");
