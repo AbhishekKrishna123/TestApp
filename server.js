@@ -42,20 +42,36 @@ app.post('/slash', function(req, res) {
             "text" : "Hello!"
         }
 
-        
-        request({
-            url: url,
-            method: "POST",
-            json: true,
-            headers: {
-                "content-type": "application/json",
+        res.status(200).send(sendTest());
+
+        function sendTest()
+        {
+            request({
+                url: url,
+                method: "POST",
+                json: true,
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify(responseObj)
+
             },
-            body: JSON.stringify(responseObj)
-        });
 
-        res.status(200).send('Processing...');
+            function(error, response, body)
+            {
+                if (!error && response.statusCode === 200)
+                {
+                    callback(body);
+                }
 
+                else
+                {
+                    console.log(error);
 
+                }
+            });
+
+        }
         // request.post(
         //     response_url,
         //     responseObj,
