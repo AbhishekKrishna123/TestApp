@@ -19,6 +19,10 @@ app.get('/test', function(req, res) {
     res.send("Hello " + name);
 });
 
+app.post('/slash', function(req, res) {
+    res.send("Hello from Slash command!");
+});
+
 var server = app.listen(port, function () {
     var host = server.address().address;
     var port = server.address().port;
