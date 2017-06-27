@@ -51,16 +51,15 @@ module.exports = {
                         tableSvc.insertEntity('MediumHighlights', newUser, function (error, result, response) {
                           if(!error){
                             // Entity inserted
-                            console.log("Successfully inserted!");
                             res.send("Successfully inserted");
                           }
                           else {
-                              console.log(response);
+                              res.send(response);
                           }
                         });
                     }
                     else {
-                        console.log(response);
+                        res.send(response);
                     }
                 });
             });   
