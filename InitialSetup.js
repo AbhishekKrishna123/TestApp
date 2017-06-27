@@ -16,8 +16,6 @@ module.exports = {
             MediumName = req.query.MediumName;
             profileURL = "https://medium.com/@" + MediumName;
 
-            res.send(profileURL);
-
             console.log(profileURL);
 
             JSDOM.fromURL(profileURL).then(dom => {
@@ -33,6 +31,7 @@ module.exports = {
                 console.log(MediumUserID);
                 console.log(DisplayName);
 
+                res.send(MediumUserID + ", " + DisplayName);
 
                 ////////////////////////////////////////////////
                 // Save the details to the User Table in Azure //
