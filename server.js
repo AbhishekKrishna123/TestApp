@@ -148,5 +148,5 @@ var server = app.listen(port, function () {
 app.get('/setup', function (req, res) {
     var InitialSetup = require("./InitialSetup");
     InitialSetup.Setup(req, res);
-    //res.send('Setup page');
+    res.send('Setup page');
 });
