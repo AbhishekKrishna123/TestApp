@@ -83,7 +83,7 @@ app.post('/slash', function(req, res) {
 
             // Get a little bit of content before and after the quote
 
-            var offset = 60
+            var offset = 60;
             var paragraphStart = startOffset-offset, paragraphEnd = endOffset+offset;
 
             if (paragraphStart < 0) paragraphStart = 0;
