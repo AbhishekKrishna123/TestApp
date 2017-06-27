@@ -9,7 +9,7 @@ module.exports = {
         .top(5)
         .where('PartitionKey eq ?', 'User');
         
-        tableSvc.queryEntities('mytable',query, null, function(error, result, response) {
+        tableSvc.queryEntities('TestTable', query, null, function(error, result, response) {
             if(!error) {
                 // query was successful
                 response.send("Success");
