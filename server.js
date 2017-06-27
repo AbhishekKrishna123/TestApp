@@ -30,7 +30,7 @@ app.post('/slash', function(req, res) {
 
 
     var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=3&to=0&source=quotes&pages=1";
-    var output = req.query.response_url + ", ";
+    var output = req.body.response_url + ", ";
 
     request(highlightsURL, function (error, response, body) {
         var newBody = "";
