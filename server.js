@@ -105,9 +105,12 @@ app.post('/actions', urlencodedParser, (req, res) =>{
         "attachments" : [
             {
                 "color": "#1466ad",
-                "title": "A Quote from Medium",
-                "text" : "`" + quotesObj[index-1] + "`",
-                "mrkdwn_in" : "text"
+                "title": "`A Quote from Medium`",
+                "text" : ">" + quotesObj[index-1],
+                "mrkdwn_in" : [
+                    "text",
+                    "title"
+                ]
             }
         ]
     }
