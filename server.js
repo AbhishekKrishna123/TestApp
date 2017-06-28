@@ -95,7 +95,7 @@ app.post('/actions', urlencodedParser, (req, res) =>{
         "text": "Button was clicked",
         "replace_original": true
     }
-    sendMessageToSlackResponseURL(actionJSONPayload.response_url, message)
+    sendTest(actionJSONPayload.response_url, message)
 })
 
 
