@@ -51,7 +51,7 @@ module.exports = {
                         // Create an object and add it to array
                         var highlight = {
                             PartitionKey: {'_':'Highlight'},
-                            RowKey: {'_': quoteID[i]},
+                            RowKey: {'_': "1"},
                             PostName: {'_': postName},
                             PostAuthor: {'_': postAuthor},
                             StartOffset: {'_': startOffset},
