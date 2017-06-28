@@ -1,5 +1,5 @@
 module.exports = {
-    getEntity: function(req, res) {
+    getEntity: function (req, res) {
         var azure = require("azure-storage");
 
         var tableSvc = azure.createTableService();
@@ -19,15 +19,14 @@ module.exports = {
         //     }
         // });
 
-        tableSvc.retrieveEntity('TestTable', 'User', req.query.MediumName, function (error, result, response){
-            if(!error){
-                res.send(response);
+        tableSvc.retrieveEntity('TestTable', 'User', req.query.MediumName, function (error, result, response) {
+            if (!error) {
+                //res.send(response);
                 // result contains the entity
                 res.send(result.MediumUserID + ", " + result.DisplayName);
-            }
-            else {
+            } else {
                 res.send(response);
             }
         });
     }
-}
+};
