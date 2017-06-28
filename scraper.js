@@ -59,19 +59,21 @@ module.exports = {
                         };
 
                         highlightsArray.push(highlight);
-                        batch.insertOrReplaceEntity(highlightsArray[i]);
+                        batch.insertOrReplaceEntity(highlight);
+
+                        // Execute batch command
+                        tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
+                            if(!error) {
+                                // Batch completed
+                                res.send(response);
+                            }
+                            else {
+                                res.send(response);
+                            }
+                        });
                     } // End of for loop
 
-                    // Execute batch command
-                    tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
-                        if(!error) {
-                            // Batch completed
-                            res.send("SUCCESS\n" + response);
-                        }
-                        else {
-                            res.send("FAIL\n" + response);
-                        }
-                    });
+                    
                 });
            }
            else {
