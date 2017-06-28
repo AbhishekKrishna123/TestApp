@@ -121,7 +121,7 @@ module.exports = {
                                 // Batch completed
                                 if (currentBatch >= totalBatch) {
                                     // All batches completed
-                                    res.send("Successfully inserted batch");
+                                    res.send("Successfully inserted batch with " + highlightsArray.length + "highlights");
                                 } else {
                                     batchProcess(highlightsArray, batchArr, currentBatch+1, totalBatch);
                                 }
