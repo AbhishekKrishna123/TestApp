@@ -24,7 +24,9 @@ module.exports = {
 
                     var newBody = "";
                     // Trim out random garbage characters in the beginning of the body (non-JSON)
-                    newBody = body.substring(16, body.length-1);
+                    for (i=16; i<body.length; i++) {
+                        newBody += body[i];
+                    }
 
                     // Convert to a JSON object and bind jsonQ to it
                     var object = jsonq(newBody);
