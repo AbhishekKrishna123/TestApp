@@ -67,11 +67,11 @@ module.exports = {
                 res.send(response);
             }
         });
+        function countOcurrences(str, key) {
+            res.send(typeof str);
+            var regExp = new RegExp(key, "gi");
+            return (str.match(regExp) || []).length;
+        }
     }
 };
 
-function countOcurrences(str, key) {
-    res.send(typeof str);
-    var regExp = new RegExp(key, "gi");
-    return (str.match(regExp) || []).length;
-}
