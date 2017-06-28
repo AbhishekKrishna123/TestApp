@@ -24,7 +24,7 @@ module.exports = {
                     if (!error) {
                         // query was successful
 
-                        res.send(result.entries[0].PostName);
+                        //res.send(result.entries[0].PostName);
 
                         // Analyse and find 5 posts most relevant to the keyword
 
@@ -34,9 +34,9 @@ module.exports = {
                         for (var i=0; i<highlightObjects.length; i++) {
                             var score = 1;
 
-                            score += countOcurrences(highlightObjects[i].Paragraph, Keyword);
-                            score += countOcurrences(highlightObjects[i].PostName, Keyword);
-                            score += countOcurrences(highlightObjects[i].PostAuthor, Keyword);
+                            score += countOcurrences(highlightObjects[i].Paragraph['_'], Keyword);
+                            score += countOcurrences(highlightObjects[i].PostName['_'], Keyword);
+                            score += countOcurrences(highlightObjects[i].PostAuthor['_'], Keyword);
 
                             relevanceScoreObject = {
                                 "index": i,
@@ -70,7 +70,6 @@ module.exports = {
             }
         });
         function countOcurrences(str, key) {
-            res.send(typeof str);
             var regExp = new RegExp(key, "gi");
             return (str.match(regExp) || []).length;
         }
