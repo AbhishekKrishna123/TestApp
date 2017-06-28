@@ -13,6 +13,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 var quote = '' ;
 var quotesObj = [];
+var all_links = [];
 
 app.use(urlencodedParser);
 app.use(bodyParser.json());
@@ -97,6 +98,12 @@ app.post('/actions', urlencodedParser, (req, res) =>{
 
     var index = parseInt(actionJSONPayload.actions[0].name);
     var s_index = actionJSONPayload.actions[0].name;
+
+    var details_full = actionJSONPayload.original_message.attachments[index-1].pretext;
+    var details_len =  details_full.length;
+
+    var details = details_full.substring(14, details_len).replace('*', '').replace(/_/g, '').replace('*', '').replace('*', '');
+
     var message = {
         "response_type" : "in_channel",
         //"text": "A quote from Medium",
@@ -104,8 +111,8 @@ app.post('/actions', urlencodedParser, (req, res) =>{
         "attachments" : [
             {
                 "color": "#1466ad",
-                "title": ">>> A Quote from Medium",
-                "text" : ">" + quotesObj[index-1],
+                "title": details,//">>> A Quote from Medium",
+                "text" : "_" + quotesObj[index-1] + "_" + "\n*>> Link to original post: *" + all_links[index-1],
                 "mrkdwn_in" : [
                     "text",
                     "title"
@@ -126,92 +133,103 @@ app.post('/slash', function(req, res) {
 
     else{
 
+        profileURL = "https://medium.com/@rahulkayala/highlights";
+        JSDOM.fromURL(profileURL).then(dom => {
+            var document = dom.window.document;
+            links = document.getElementsByClassName(" quoteItem-content");
 
-    var numPosts = req.body.text || 1;
-    var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=" + numPosts + "&to=0&source=quotes&pages=1";
-    var output = '' ;//= req.body.response_url + ", ";
-    var response_url =  req.body.response_url;
-    var attachmentsObj = [];
-    quotesObj = [];
+            for (var i = 0; i < links.length; i=i+1)
+            {
+                all_links.push(links[i].getAttribute("href"));
+            }
 
-    res.send(
-        {
+
+
+        });
+
+        var numPosts = req.body.text || 1;
+        var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=" + numPosts + "&to=0&source=quotes&pages=1";
+        var output = '' ;//= req.body.response_url + ", ";
+        var response_url =  req.body.response_url;
+        var attachmentsObj = [];
+        quotesObj = [];
+
+        res.send({
             "response_type": "ephemeral", //THIS WAS CHANGED
             "text": "Highlights are coming up..."
-        }
-    );
+        });
 
-    request(highlightsURL, function (error, response, body) {
-        var newBody = "";
-        // Trim out random garbage characters in the beginning of the body (non-JSON)
-        for (var i=16; i<body.length; i++) {
-            newBody += body[i];
-        }
+        request(highlightsURL, function (error, response, body) {
+            var newBody = "";
+            // Trim out random garbage characters in the beginning of the body (non-JSON)
+            for (var i=16; i<body.length; i++) {
+                newBody += body[i];
+            }
 
-        // Convert to a JSON object for using jsonQ functions
-        var object = jsonq(newBody);
+            // Convert to a JSON object for using jsonQ functions
+            var object = jsonq(newBody);
 
-        // Find all quoteIDs
-        var quoteID = object.find('payload').find('references').find('quoteId').value();
+            // Find all quoteIDs
+            var quoteID = object.find('payload').find('references').find('quoteId').value();
 
-        //console.log(numPosts + " most recent highlights by " + userName + " (@" + userHandle + ")"); 
+            //console.log(numPosts + " most recent highlights by " + userName + " (@" + userHandle + ")"); 
 
-        for (var i = 0; i < quoteID.length; i++) {
-            var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
-            var postName = object.find('payload').find('references').find('Post').find(postID).find('title').value();
-            var postAuthorID = object.find('payload').find('references').find('Post').find(postID).find('creatorId').value();
-            var postAuthor = object.find('payload').find('references').find('User').find(postAuthorID).find('name').value();
-            var quoteParagraphRaw = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('paragraphs').find('text').value();
-            var startOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('startOffset').value();
-            var endOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('endOffset').value();
+            for (var i = 0; i < quoteID.length; i++) {
+                var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
+                var postName = object.find('payload').find('references').find('Post').find(postID).find('title').value();
+                var postAuthorID = object.find('payload').find('references').find('Post').find(postID).find('creatorId').value();
+                var postAuthor = object.find('payload').find('references').find('User').find(postAuthorID).find('name').value();
+                var quoteParagraphRaw = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('paragraphs').find('text').value();
+                var startOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('startOffset').value();
+                var endOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('endOffset').value();
 
-            // Convert the array to a string
-            var quoteParagraphString = quoteParagraphRaw.join("");
-            // Get only the highlighted section
-            quote = quoteParagraphString.substring(startOffset, endOffset) //CHANGED AT 1222
+                // Convert the array to a string
+                var quoteParagraphString = quoteParagraphRaw.join("");
+                // Get only the highlighted section
+                quote = quoteParagraphString.substring(startOffset, endOffset) //CHANGED AT 1222
 
-            quotesObj.push(quote); //ADDED at 1239
-            // Get a little bit of content before and after the quote
+                quotesObj.push(quote); //ADDED at 1239
+                // Get a little bit of content before and after the quote
 
-            var offset = 50;
-            var paragraphStart = parseInt(startOffset) - offset;
-            var paragraphEnd = parseInt(endOffset) + offset;
+                var offset = 50;
+                var paragraphStart = parseInt(startOffset) - offset;
+                var paragraphEnd = parseInt(endOffset) + offset;
 
-            if (paragraphStart < 0) paragraphStart = 0;
-            //if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
+                if (paragraphStart < 0) paragraphStart = 0;
+                //if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
 
-            var quoteParagraph = "";
-            if (paragraphStart != 0) quoteParagraph += "...";
-            quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
-            if (endOffset != paragraphEnd) quoteParagraph += "..";
+                var quoteParagraph = "";
+                if (paragraphStart != 0) quoteParagraph += "...";
+                quoteParagraph += quoteParagraphString.substring(paragraphStart, paragraphEnd);
+                if (endOffset != paragraphEnd) quoteParagraph += "..";
 
-            var startingPart = quoteParagraphString.substring(paragraphStart, startOffset);
-            var endingPart = quoteParagraphString.substring(endOffset, paragraphEnd);
+                var startingPart = quoteParagraphString.substring(paragraphStart, startOffset);
+                var endingPart = quoteParagraphString.substring(endOffset, paragraphEnd);
 
 
-            highlightNumber = parseInt(i);
-            highlightNumber++;
-            // Output
-            outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
-            var strhighlight = highlightNumber.toString();
-            // Formatting
-            var obj = {
-                "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
-                "text": "`" + quote + "`",
-                "callback_id" : "button-trial",
-                "mrkdwn_in": [
-                    "text",
-                    "pretext"
-                ],
-                "color": "#3AA3E3",
-                "actions": [
-                {
-                    "name": strhighlight,
-                    "text": "Send as message",
-                    "type": "button",
-                    "value": "Send as message"
-                }
-            ]
+                highlightNumber = parseInt(i);
+                highlightNumber++;
+                // Output
+                outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
+                var strhighlight = highlightNumber.toString();
+                // Formatting
+                var obj = {
+                    "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
+                    "text": "`" + quote + "`",
+                    "callback_id" : "button-trial",
+                    "mrkdwn_in": [
+                        "text",
+                        "pretext"
+                    ],
+                    "color": "#3AA3E3",
+                    "actions": [
+                        {
+                            "name": strhighlight,
+                            "text": "Send as message",
+                            "type": "button",
+                            "value": "Send as message"
+                        }
+                    ]
 
             };
 
