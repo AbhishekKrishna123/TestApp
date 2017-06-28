@@ -10,13 +10,9 @@ module.exports = {
         var jquery = require("jquery");
         var azure = require('azure-storage');
 
-        console.log('Running InitialSetup.');
-
         if (req.query.MediumName) {
             MediumName = req.query.MediumName;
             profileURL = "https://medium.com/@" + MediumName;
-
-            console.log(profileURL);
 
             JSDOM.fromURL(profileURL).then(dom => {
                 console.log("DOM created!");
@@ -25,21 +21,14 @@ module.exports = {
                 var MediumUserID = element[0].getAttribute("data-user-id");
                 var elem = document.getElementsByClassName("hero-title");
                 var DisplayName = elem[0].innerHTML;
-                // var $ = jquery(window);
-                // var MediumUserID = $('.followState').attr('data-user-id');
-                // var DisplayName = $('.hero-title').html();;
-                console.log(MediumUserID);
-                console.log(DisplayName);
 
                 ////////////////////////////////////////////////
                 // Save the details to the User Table in Azure //
                 ////////////////////////////////////////////////
                 var tableSvc = azure.createTableService();
-                //res.send("Table service created.");
                 // Create table if it doesn't exist
                 tableSvc.createTableIfNotExists('MediumUsers', function(error, result, response){
                     if(!error){
-                        //res.send("Table created.");
                         // Create an entity
                         var newUser = {
                             PartitionKey: {'_':'User'},
