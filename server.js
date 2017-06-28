@@ -124,7 +124,7 @@ app.post('/slash', function(req, res) {
     var reqBody = req.body
     if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93')
     {
-        res.status(403).end("Access forbidden")
+        res.status(403).end("Access forbidden!")
     }
 
     else{
