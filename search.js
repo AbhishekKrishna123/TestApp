@@ -52,7 +52,7 @@ module.exports = {
                         });
 
                         // Return upto top 5 results
-                        var responseString = "";
+                        var responseString = "<p>";
 
                         for (var i=0; i < Math.min(5, highlightObjects.length); i++) {
                             responseString += "\n\n\nPost: " + highlightObjects[relevanceScoreArray[i].index].PostName['_'] + 
@@ -60,8 +60,8 @@ module.exports = {
                                                 "\n\n" + highlightObjects[relevanceScoreArray[i].index].Paragraph['_'];
                             //JSON.stringify(highlightObjects[relevanceScoreArray[i].index]);
                         }
-
-                        res.send(responseString);
+                        res.set('Content-Type', 'text/html');
+                        res.send(responseString + "</p>");
 
                     } else {
                         res.send(response);
