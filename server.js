@@ -104,7 +104,7 @@ app.post('/actions', urlencodedParser, (req, res) =>{
         "replace_original": true,
         "attachments" : [
             {
-                "color": "#000000",
+                "color": "#1466ad",
                 "pretext": "A Quote from Medium",
                 "text" : quotesObj[index-1]
             }
