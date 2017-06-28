@@ -125,10 +125,10 @@ app.post('/slash', function(req, res) {
                 "color": "#3AA3E3",        // THIS AND THE NEXT PARAMETER WERE ADDED
                 "actions": [
                 {
-                    "name": "PostAction",
+                    "name": "Send as message",
                     "text": "Send as message",
                     "type": "button",
-                    "value": "post"
+                    "value": "Send as message"
                 }
             ]
 
@@ -205,8 +205,9 @@ app.post('/actions', urlencodedParser, function(req, res){
         var JSONpayload = JSON.parse(req.body.payload)
         var clickresp = {
 
-        "text" : "Your message",
-        "replace_original" : true
+            "response_type" : "in_channel",
+            "text" : "Your message",
+            "replace_original" : true
         }
 
         sendTest(JSONpayload.response_url, clickresp);
