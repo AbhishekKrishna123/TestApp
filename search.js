@@ -47,6 +47,7 @@ module.exports = {
                         }
 
                         // Sorts the score array in descending order
+                        // https://stackoverflow.com/a/979289/5640715
                         relevanceScoreArray.sort(function (a, b) {
                             return parseInt(b.score) - parseInt(a.score);
                         });
@@ -55,9 +56,9 @@ module.exports = {
                         var responseString = "";
 
                         for (var i=0; i < Math.min(5, highlightObjects.length); i++) {
-                            responseString += "\n<br><br><br><h3>Post: " + highlightObjects[relevanceScoreArray[i].index].PostName['_'] + 
+                            responseString += "<h3>Post: " + highlightObjects[relevanceScoreArray[i].index].PostName['_'] + 
                                                 "<br>Author: " + highlightObjects[relevanceScoreArray[i].index].PostAuthor['_'] +
-                                                "\n</h3><br><br><p>" + highlightObjects[relevanceScoreArray[i].index].Paragraph['_'];
+                                                "</h3><br><br><p>" + highlightObjects[relevanceScoreArray[i].index].Paragraph['_'] + "<br><br><br>";
                             //JSON.stringify(highlightObjects[relevanceScoreArray[i].index]);
                         }
                         res.set('Content-Type', 'text/html');
@@ -72,6 +73,7 @@ module.exports = {
                 res.send(response);
             }
         });
+        // https://stackoverflow.com/a/15891749/5640715
         function countOcurrences(str, key) {
             var regExp = new RegExp(key, "gi");
             return (str.match(regExp) || []).length;
