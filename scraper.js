@@ -59,12 +59,12 @@ module.exports = {
                             Paragraph: {'_': toString(quoteParagraphString)}
                         };
 
-                        res.send(typeof quoteID[i]);
+                        //res.send(typeof quoteID[i]);
 
                         tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
                             if(!error){
                                 // Entity inserted
-                                tableSvc.retrieveEntity('MediumHighlights', 'Highlight', toString(quoteID[i]), function (error, result, response) {
+                                tableSvc.retrieveEntity('MediumHighlights', 'Highlight', quoteID[i], function (error, result, response) {
                                     if (!error) {
                                         //res.send(response);
                                         // result contains the entity
