@@ -100,13 +100,17 @@ app.post('/actions', urlencodedParser, (req, res) =>{
     var s_index = actionJSONPayload.actions[0].name;
     var message = {
         "response_type" : "in_channel",
-        "text": "A quote from Medium",
+        //"text": "A quote from Medium",
         "replace_original": true,
         "attachments" : [
             {
-                "color": "#36a64f",
-                "pretext": "A Quote from Medium",
-                "text" : quotesObj[index-1]
+                "color": "#1466ad",
+                "title": ">>> A Quote from Medium",
+                "text" : ">" + quotesObj[index-1],
+                "mrkdwn_in" : [
+                    "text",
+                    "title"
+                ]
             }
         ]
     }
@@ -120,7 +124,7 @@ app.post('/slash', function(req, res) {
     var reqBody = req.body
     if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93')
     {
-        res.status(403).end("Access forbidden")
+        res.status(403).end("Access forbidden!")
     }
 
     else{
