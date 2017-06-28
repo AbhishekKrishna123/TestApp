@@ -61,7 +61,7 @@ module.exports = {
                             Paragraph: {'_': toString(quoteParagraphString)}
                         };
 
-                        list += "\n" + toString(quoteID[i]);
+                        list += "\n" + quoteID[i];
 
                         // tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
                         //     if(!error){
