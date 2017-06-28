@@ -54,7 +54,7 @@ module.exports = {
                         // Return upto top 5 results
                         var responseString = "";
 
-                        for (var i=0; i < min(5, highlightObjects.length); i++) {
+                        for (var i=0; i < Math.min(5, highlightObjects.length); i++) {
                             responseString += JSON.stringify(highlightObjects[relevanceScoreArray[i].index]);
                         }
 
