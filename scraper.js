@@ -59,30 +59,30 @@ module.exports = {
                             Paragraph: {'_': toString(quoteParagraphString)}
                         };
 
-                        tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
-                            if(!error){
-                                // Entity inserted
-                                res.send("Successfully inserted");
-                            }
-                            else {
-                                res.send(response);
-                            }
-                        });
+                        // tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
+                        //     if(!error){
+                        //         // Entity inserted
+                        //         res.send("Successfully inserted");
+                        //     }
+                        //     else {
+                        //         res.send(response);
+                        //     }
+                        // });
 
-                        // highlightsArray.push(highlight);
-                        // batch.insertOrReplaceEntity(highlightsArray[i]);
+                        highlightsArray.push(highlight);
+                        batch.insertOrReplaceEntity(highlightsArray[i]);
                     } // End of for loop
 
                     // Execute batch command
-                    // tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
-                    //     if(!error) {
-                    //         // Batch completed
-                    //         res.send("SUCCESS\n" + response);
-                    //     }
-                    //     else {
-                    //         res.send("FAIL\n" + response);
-                    //     }
-                    // });
+                    tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
+                        if(!error) {
+                            // Batch completed
+                            res.send("Successfully inserted!");
+                        }
+                        else {
+                            res.send(response);
+                        }
+                    });
                 });
            }
            else {
