@@ -13,6 +13,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false }); // THIS LINE 
 
 
 var quote = '' ;
+var quotesObj = [];
 
 app.use(urlencodedParser); //bodyParser.urlencoded({ extended: false }) was removed 
 app.use(bodyParser.json());
@@ -94,9 +95,12 @@ app.get('/lol', function(req, res) {
 app.post('/actions', urlencodedParser, (req, res) =>{
     res.status(200).end() // best practice to respond with 200 status
     var actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
+
+    var index = parseInt(actionJSONPayload.actions.name[7])
+
     var message = {
         "response_type" : "in_channel",
-        "text": quote,
+        "text": "Hello",
         "replace_original": true
     }
     sendTest(actionJSONPayload.response_url, message)
@@ -121,6 +125,8 @@ app.post('/slash', function(req, res) {
     var output = '' ;//= req.body.response_url + ", ";
     var response_url =  req.body.response_url;
     var attachmentsObj = [];
+
+    
 
     res.send(
         {
@@ -160,6 +166,7 @@ app.post('/slash', function(req, res) {
             // Get only the highlighted section
             quote = quoteParagraphString.substring(startOffset, endOffset) //CHANGED AT 1222
 
+            quotesObj.push(quote); //ADDED at 1239
             // Get a little bit of content before and after the quote
 
             var offset = 50;
@@ -195,7 +202,7 @@ app.post('/slash', function(req, res) {
                 "color": "#3AA3E3",        // THIS AND THE NEXT PARAMETER WERE ADDED
                 "actions": [
                 {
-                    "name": "Send as message",
+                    "name": "Send H" + highlightNumber +" as message",
                     "text": "Send as message",
                     "type": "button",
                     "value": "Send as message"
