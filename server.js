@@ -108,7 +108,7 @@ app.post('/slash', function(req, res) {
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
                 "text": "`" + quote + "`",
-                "callback-id" : "button-trial",
+                "callback_id" : "button-trial",
                 "mrkdwn_in": [
                     "text",
                     "pretext"
