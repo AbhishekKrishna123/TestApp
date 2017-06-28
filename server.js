@@ -107,7 +107,7 @@ app.post('/slash', function(req, res) {
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
-                "text": startingPart + "*_" + quote + "_*" + endingPart,
+                "text": "`" + quote + "`",
                 "callback_id" : "button-trial",
                 "mrkdwn_in": [
                     "text",
@@ -184,7 +184,7 @@ app.post('/slash', function(req, res) {
 app.post('/actions', function(req, res){
 
     //res.status(200).end()
-    if (reqBody.token != YOUR_APP_VERIFICATION_TOKEN){
+    if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93'){
         res.status(403).end("Access forbidden")
     }
 
