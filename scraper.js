@@ -14,7 +14,7 @@ module.exports = {
                 // result contains the entity
                 var userID = result.MediumUserID['_'];
 
-                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=1&to=0&source=quotes&pages=1";
+                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=3&to=0&source=quotes&pages=1";
 
                 request(highlightsURL, function (error, response, body) {
 
@@ -86,7 +86,7 @@ module.exports = {
                         batch.insertOrReplaceEntity(highlightsArray[i]);
                     } // End of for loop
 
-                    Execute batch command
+                    // Execute batch command
                     tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
                         if(!error) {
                             // Batch completed
