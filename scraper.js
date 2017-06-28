@@ -62,16 +62,14 @@ module.exports = {
                         batch.insertOrReplaceEntity(highlightsArray[i]);
                     } // End of for loop
 
-                    res.send(batch.size());
-
                     // Execute batch command
                     tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
                         if(!error) {
                             // Batch completed
-                            res.send(response);
+                            res.send("SUCCESS\n" + response);
                         }
                         else {
-                            res.send(response);
+                            res.send("FAIL\n" + response);
                         }
                     });
                 });
