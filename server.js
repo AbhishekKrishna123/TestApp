@@ -100,7 +100,7 @@ app.post('/actions', urlencodedParser, (req, res) =>{
 
     var message = {
         "response_type" : "in_channel",
-        "text": quotesObj[index],
+        "text": "Hello",
         "replace_original": true
     }
     sendTest(actionJSONPayload.response_url, message)
