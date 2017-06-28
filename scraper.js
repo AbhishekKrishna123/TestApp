@@ -66,10 +66,10 @@ module.exports = {
                     tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
                         if(!error) {
                             // Batch completed
-                            res.send(response);
+                            res.send("SUCCESS\n" + response);
                         }
                         else {
-                            res.send(response);
+                            res.send("FAIL\n" + response);
                         }
                     });
                 });
