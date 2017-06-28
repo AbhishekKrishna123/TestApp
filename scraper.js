@@ -15,7 +15,7 @@ module.exports = {
         tableSvc.retrieveEntity('MediumUsers', 'User', MediumName, function(error, result, response){
             if(!error){
                 // result contains the entity
-                var MediumUserID = result.MediumMediumUserID['_'];
+                var MediumUserID = result.MediumUserID['_'];
 
                 // The API URL from which returns JSON data of highlights
                 var highlightsURL = "https://medium.com/_/api/users/" + MediumUserID + "/profile/stream?limit=100&to=0&source=quotes&pages=1";
