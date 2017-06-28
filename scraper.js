@@ -12,8 +12,8 @@ module.exports = {
         // Initialize Azure Table Service
         var tableSvc = azure.createTableService();
 
-        tableSvc.retrieveEntity('MediumUsers', 'User', MediumName, function(error, result, response){
-            if(!error){
+        tableSvc.retrieveEntity('MediumUsers', 'User', MediumName, function(error, result, response) {
+            if(!error) {
                 // result contains the entity
                 var MediumUserID = result.MediumUserID['_'];
 
@@ -34,12 +34,32 @@ module.exports = {
                     // Find all quoteIDs
                     var quoteID = object.find('payload').find('references').find('quoteId').value();
 
-                    // Batch operation for inserting all highlights together
-                    var batch = new azure.TableBatch();
+                    var numHighlights = quoteID.length;
+
+                    //////////////////////////////////////////////////////////////////
+                    //   Batch operations don't support more than 100 operations    //
+                    //  So workaround for that scenario is to have multiple batches //
+                    //////////////////////////////////////////////////////////////////
+
+                    // Number of batch objects required
+                    var numBatches = Math.ceil(numHighlights / 100);
+                    // Array to store batch objects
+                    var batchArr = [];
+                    
+                    // Create multiple batch objects (for supporting >100 highlights)
+                    for (var j=0; j<numBatches; j++) {
+                        var batch = new azure.TableBatch();
+                        batchArr.push(batch);
+                    }
+
                     // Array to store highlight objects
                     var highlightsArray = [];
 
+                    // Loop for iterating through every quote/highlight
                     for (var i = 0; i < quoteID.length; i++) {
+                        var batchIndex = Math.trunc(i/100);
+
+                        // Extract values from JSON object
                         var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
                         var postName = object.find('payload').find('references').find('Post').find(postID).find('title').value();
                         var postAuthorID = object.find('payload').find('references').find('Post').find(postID).find('creatorId').value();
@@ -86,22 +106,33 @@ module.exports = {
                         // });
 
                         highlightsArray.push(highlight);
-                        batch.insertOrReplaceEntity(highlightsArray[i]);
+                        batchArr[batchIndex].insertOrReplaceEntity(highlightsArray[i]);
                     } // End of for loop
 
-                    // Execute batch command
-                    tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
-                        if(!error) {
-                            // Batch completed
-                            res.send("Successfully inserted batch: " + batch.size());
-                        }
-                        else {
-                            res.send(response);
-                        }
-                    });
+                    // Call the recursive function
+                    batchProcess(highlightsArray, batchArr, 0, numBatches - 1);
+
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    // Recursive function for inserting multiple batches
+                    function batchProcess(highlightsArray, batchArr, currentBatch, totalBatch) {
+                        // Execute batch command
+                        tableSvc.executeBatch('MediumHighlights', batchArr[currentBatch], function (error, result, response) {
+                            if(!error) {
+                                // Batch completed
+                                if (currentBatch >= totalbatch) {
+                                    // All batches completed
+                                    res.send("Successfully inserted batch");
+                                } else {
+                                    batchProcess(highlightsArray, batchArr, currentBatch+1, totalBatch);
+                                }
+                            } else {
+                                res.send(response);
+                            }
+                        });
+                    }
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 });
-           }
-           else {
+           } else {
                res.send(response);
            }
         });
