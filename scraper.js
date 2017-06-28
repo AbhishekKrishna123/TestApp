@@ -1,17 +1,11 @@
 module.exports = {
     Scraper: function(req, res) {
         // Require this stuff
-        const jsdom = require("jsdom");
-        const {JSDOM} = jsdom;
         var request = require("request");
         var jsonq=require("jsonq");
         var azure = require('azure-storage');
 
-        // var name = process.argv[2];
-        // var numPosts = process.argv[3];
         var MediumName = req.query.MediumName;
-        //var numPosts = req.query.num;
-        profileURL = "https://medium.com/@" + MediumName;
 
         var tableSvc = azure.createTableService();
 
@@ -19,6 +13,8 @@ module.exports = {
             if(!error){
                 // result contains the entity
                 var userID = result.MediumUserID['_'];
+
+                res.send(userID);
 
                 var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=3&to=0&source=quotes&pages=1";
 
