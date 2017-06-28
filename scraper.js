@@ -34,8 +34,6 @@ module.exports = {
                     var batch = new azure.TableBatch();
                     var highlightsArray = [];
 
-                    var list = "";
-
                     for (var i = 0; i < quoteID.length; i++) {
                         var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
                         var postName = object.find('payload').find('references').find('Post').find(postID).find('title').value();
@@ -61,7 +59,7 @@ module.exports = {
                             Paragraph: {'_': toString(quoteParagraphString)}
                         };
 
-                        list += "\n" + quoteID[i];
+                        res.send("Postname: " + highlight.PostName['_']);
 
                         tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
                             if(!error){
