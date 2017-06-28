@@ -23,7 +23,6 @@ module.exports = {
                 tableSvc.queryEntities('MediumHighlights', query, null, function (error, result, response) {
                     if (!error) {
                         // query was successful
-                        res.send("Number of entries: " + result.entries.length);
 
                         // Analyse and find 5 posts most relevant to the keyword
 
