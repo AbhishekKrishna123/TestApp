@@ -211,7 +211,7 @@ app.post('/slash', function(req, res) {
         }
         
         var responseObj = {
-            "response_type" : "ephemeral", // THIS WAS CHANGED
+            "response_type" : "in_channel", // THIS WAS CHANGED
             "text" : "Here are your highlights:",
             "attachments": attachmentsObj
         }
