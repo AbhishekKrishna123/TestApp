@@ -106,7 +106,7 @@ app.post('/actions', urlencodedParser, (req, res) =>{
             {
                 "color": "#1466ad",
                 "title": "A Quote from Medium",
-                "text" : quotesObj[index-1]
+                "text" : "`" + quotesObj[index-1] + "`"
             }
         ]
     }
