@@ -63,10 +63,18 @@ module.exports = {
 
                         list += "\n" + quoteID[i];
 
-                        tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, {echoContent: true}, function (error, result, response) {
+                        tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
                             if(!error){
                                 // Entity inserted
-                                res.send(result.quoteID['_'] + result.PostName['_'] + result.PostAuthor['_']);
+                                tableSvc.retrieveEntity('MediumHighlights', 'Highlight', toString(quoteID[i]), function (error, result, response) {
+                                    if (!error) {
+                                        //res.send(response);
+                                        // result contains the entity
+                                        res.send(result.PostName['_'] + ", " + result.PostAuthor['_']);
+                                    } else {
+                                        res.send(response);
+                                    }
+                                });
                             }
                             else {
                                 res.send(response);
