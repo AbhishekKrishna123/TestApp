@@ -48,10 +48,21 @@ module.exports = {
                             DisplayName: {'_': DisplayName}
                         };
                         // Insert into table
-                        tableSvc.insertOrReplaceEntity('MediumHighlights', newUser, function (error, result, response) {
-                            if(!error){
-                                // Entity inserted
-                                res.send("Successfully inserted");
+                        // tableSvc.insertOrReplaceEntity('MediumHighlights', newUser, function (error, result, response) {
+                        //     if(!error){
+                        //         // Entity inserted
+                        //         res.send("Successfully inserted");
+                        //     }
+                        //     else {
+                        //         res.send(response);
+                        //     }
+                        // });
+                        var batch = new azure.TableBatch();
+                        batch.insertOrReplaceEntity(newUser);
+                        tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
+                            if(!error) {
+                                // Batch completed
+                                res.send(response);
                             }
                             else {
                                 res.send(response);
