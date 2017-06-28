@@ -125,7 +125,7 @@ app.post('/slash', function(req, res) {
     var output = '' ;//= req.body.response_url + ", ";
     var response_url =  req.body.response_url;
     var attachmentsObj = [];
-
+    quotesObj = [];
     
 
     res.send(
