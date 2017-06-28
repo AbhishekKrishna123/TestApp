@@ -26,11 +26,77 @@ app.get('/lol', function(req, res) {
     res.send('LOL');
 });
 
-app.get('/test', function(req, res) {
-    var name = req.query.name;
-    res.send("Hello " + name);
+app.post('/test', urlencodedParser, function(req, res) {
+    // var name = req.query.name;
+    // res.send("Hello " + name);
+    res.status(200).end() // best practice to respond with empty 200 status code
+    var reqBody = req.body
+    var responseURL = reqBody.response_url
+    if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93'){
+        res.status(403).end("Access forbidden")
+    }else{
+        var message = {
+            "text": "This is your first interactive message",
+            "attachments": [
+                {
+                    "text": "Building buttons is easy right?",
+                    "fallback": "Shame... buttons aren't supported in this land",
+                    "callback_id": "button_tutorial",
+                    "color": "#3AA3E3",
+                    "attachment_type": "default",
+                    "actions": [
+                        {
+                            "name": "yes",
+                            "text": "yes",
+                            "type": "button",
+                            "value": "yes"
+                        },
+                        {
+                            "name": "no",
+                            "text": "no",
+                            "type": "button",
+                            "value": "no"
+                        },
+                        {
+                            "name": "maybe",
+                            "text": "maybe",
+                            "type": "button",
+                            "value": "maybe",
+                            "style": "danger"
+                        }
+                    ]
+                }
+            ]
+        }
+        sendMessageToSlackResponseURL(responseURL, message)
+    }
 });
 
+function sendMessageToSlackResponseURL(responseURL, JSONmessage){
+    var postOptions = {
+        uri: responseURL,
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        json: JSONmessage
+    }
+    request(postOptions, (error, response, body) => {
+        if (error){
+            // handle errors as you see fit
+        }
+    })
+}
+
+app.post('/actions', urlencodedParser, (req, res) =>{
+    res.status(200).end() // best practice to respond with 200 status
+    var actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
+    var message = {
+        "text": actionJSONPayload.user.name+" clicked: "+actionJSONPayload.actions[0].name,
+        "replace_original": false
+    }
+    sendMessageToSlackResponseURL(actionJSONPayload.response_url, message)
+})
 
 
 
@@ -191,43 +257,43 @@ function sendTest(responseURL, JSONmsg/*CHANGED*/) {
 
 }
 
-app.post('/actions', urlencodedParser, function(req, res){
+// app.post('/actions', urlencodedParser, function(req, res){
 
-    res.status(200).end()
-    var reqBody = req.body
-    if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93')
-    {
-        res.status(403).end("Access forbidden")
-    }
+//     res.status(200).end()
+//     var reqBody = req.body
+//     if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93')
+//     {
+//         res.status(403).end("Access forbidden")
+//     }
 
-    else
-    {
-        var JSONpayload = JSON.parse(req.body.payload)
-        var payload = {
+//     else
+//     {
+//         var JSONpayload = JSON.parse(req.body.payload)
+//         var payload = {
 
-            //"response_type" : "in_channel",
-            "text" : "Your message",
-            //"replace_original" : true
-        }
+//             //"response_type" : "in_channel",
+//             "text" : "Your message",
+//             //"replace_original" : true
+//         }
 
-        sendTest("https://hooks.slack.com/services/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", payload);
+//         sendTest("https://hooks.slack.com/services/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", payload);
 
-        // function sendTest2(JSONmsg/*CHANGED*/) {
-        //     request({
-        //         url: response_url,
-        //         method: "POST",
-        //         json: JSONmsg, //CHANGED
-        //         headers: 
-        //         {
-        //             "content-type": "application/json",
-        //         },
-        //     }, function(error, response, body){}
-        //     );
-        // }
-    }
+//         // function sendTest2(JSONmsg/*CHANGED*/) {
+//         //     request({
+//         //         url: response_url,
+//         //         method: "POST",
+//         //         json: JSONmsg, //CHANGED
+//         //         headers: 
+//         //         {
+//         //             "content-type": "application/json",
+//         //         },
+//         //     }, function(error, response, body){}
+//         //     );
+//         // }
+//     }
 
 
-});
+// });
 
 
 var server = app.listen(port, function () {
