@@ -61,10 +61,13 @@ module.exports = {
 
                         //res.send(typeof quoteID[i]);
 
+                        id = "";
+                        id += quoteID[i];
+
                         tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
                             if(!error){
                                 // Entity inserted
-                                tableSvc.retrieveEntity('MediumHighlights', 'Highlight', quoteID[i], function (error, result, response) {
+                                tableSvc.retrieveEntity('MediumHighlights', 'Highlight', id, function (error, result, response) {
                                     if (!error) {
                                         //res.send(response);
                                         // result contains the entity
