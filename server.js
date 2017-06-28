@@ -98,7 +98,10 @@ app.post('/actions', urlencodedParser, (req, res) =>{
     var index = parseInt(actionJSONPayload.actions[0].name);
     var s_index = actionJSONPayload.actions[0].name;
 
-    var details = actionJSONPayload.original_message.attachments[index-1].pretext;
+    
+    var details_len =  actionJSONPayload.original_message.attachments[index-1].pretext.length;
+
+    var details = actionJSONPayload.original_message.attachments[index-1].pretext.substring(14, details_len);
 
     var message = {
         "response_type" : "in_channel",
