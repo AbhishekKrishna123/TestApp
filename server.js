@@ -232,7 +232,7 @@ app.get('/setup', function (req, res) {
     InitialSetup.Setup(req, res);
 });
 
-app.get('/entity', function(req, res) {
+app.get('/entity', function (req, res) {
     var entity = require("./entity");
     entity.getEntity(req, res);
 });

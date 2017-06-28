@@ -37,7 +37,7 @@ module.exports = {
                 var tableSvc = azure.createTableService();
                 //res.send("Table service created.");
                 // Create table if it doesn't exist
-                tableSvc.createTableIfNotExists('TestTable', function(error, result, response){
+                tableSvc.createTableIfNotExists('MediumHighlights', function(error, result, response){
                     if(!error){
                         //res.send("Table created.");
                         // Create an entity
@@ -49,24 +49,13 @@ module.exports = {
                         };
                         // Insert into table
                         tableSvc.insertEntity('MediumHighlights', newUser, function (error, result, response) {
-                          if(!error){
-                            // Entity inserted
-                            res.send("Successfully inserted");
-                          }
-                          else {
-                            tableSvc.retrieveEntity('TestTable', 'User', MediumName, function(error, result, response){
-                                if(!error){
-                                    response.send(response);
-                                    // result contains the entity
-                                    response.send(result.MediumUserID + ", " + result.DisplayName);
-                                }
-                                else {
-                                    response.send(response);
-                                }
-                            });
-
-                              //res.send(response);
-                          }
+                            if(!error){
+                                // Entity inserted
+                                res.send("Successfully inserted");
+                            }
+                            else {
+                                res.send(response);
+                            }
                         });
                     }
                     else {
