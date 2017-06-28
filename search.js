@@ -24,6 +24,8 @@ module.exports = {
                     if (!error) {
                         // query was successful
 
+                        res.send(result.entries[0].PostName);
+
                         // Analyse and find 5 posts most relevant to the keyword
 
                         var relevanceScoreArray = [];
