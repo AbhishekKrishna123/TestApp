@@ -235,3 +235,8 @@ app.get('/entity', function (req, res) {
     var entity = require("./entity");
     entity.getEntity(req, res);
 });
+
+app.get('/scraper', function (req, res) {
+    var entity = require("./scraper");
+    entity.Scraper(req, res);
+});

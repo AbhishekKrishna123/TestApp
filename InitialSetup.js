@@ -48,7 +48,7 @@ module.exports = {
                             DisplayName: {'_': DisplayName}
                         };
                         // Insert into table
-                        tableSvc.insertEntity('MediumHighlights', newUser, function (error, result, response) {
+                        tableSvc.insertOrReplaceEntity('MediumHighlights', newUser, function (error, result, response) {
                             if(!error){
                                 // Entity inserted
                                 res.send("Successfully inserted");
