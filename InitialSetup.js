@@ -7,15 +7,14 @@ module.exports = {
 
         const jsdom = require("jsdom");
         const {JSDOM} = jsdom;
-        var jquery = require("jquery");
         var azure = require('azure-storage');
 
         if (req.query.MediumName) {
-            MediumName = req.query.MediumName;
-            profileURL = "https://medium.com/@" + MediumName;
+            var MediumName = req.query.MediumName;
+            var profileURL = "https://medium.com/@" + MediumName;
 
-            JSDOM.fromURL(profileURL).then(dom => {
-                console.log("DOM created!");
+            JSDOM.fromURL(profileURL).then(function (dom) {
+                // Extract the required things from the DOM
                 var document = dom.window.document;
                 var element = document.getElementsByClassName("followState");
                 var MediumUserID = element[0].getAttribute("data-user-id");
@@ -26,32 +25,26 @@ module.exports = {
                 // Save the details to the User Table in Azure //
                 ////////////////////////////////////////////////
                 var tableSvc = azure.createTableService();
-                // Create table if it doesn't exist
-                tableSvc.createTableIfNotExists('MediumUsers', function(error, result, response){
-                    if(!error){
-                        // Create an entity
-                        var newUser = {
-                            PartitionKey: {'_':'User'},
-                            RowKey: {'_': MediumName},
-                            MediumUserID: {'_': MediumUserID},
-                            DisplayName: {'_': DisplayName}
-                        };
-                        // Insert into table
-                        tableSvc.insertOrReplaceEntity('MediumUsers', newUser, function (error, result, response) {
-                            if(!error){
-                                // Entity inserted
-                                res.send("Successfully inserted " + MediumName + "!, User ID: " + MediumUserID);
-                            }
-                            else {
-                                res.send(response);
-                            }
-                        });
-                    }
-                    else {
+
+                var newUser = {
+                    PartitionKey: {'_': 'User'},
+                    RowKey: {'_': MediumName},
+                    MediumUserID: {'_': MediumUserID},
+                    DisplayName: {'_': DisplayName}
+                };
+
+                // Insert into table
+                tableSvc.insertOrReplaceEntity('MediumUsers', newUser, function (error, result, response) {
+                    if (!error) {
+                        // Entity inserted
+                        res.send("Successfully inserted " + MediumName + "!, User ID: " + MediumUserID);
+                    } else {
                         res.send(response);
                     }
                 });
-            });   
+            });
+        } else {
+            res.send("Function requires 'MediumName' as a parameter!");
         }
     }
 };
