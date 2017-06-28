@@ -94,16 +94,16 @@ app.get('/lol', function(req, res) {
 
 app.post('/actions', urlencodedParser, (req, res) =>{
     res.status(200).end() // best practice to respond with 200 status
-    var actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
+    var actionJSONPayload = JSON.parse(req.body.payload); // parse URL-encoded payload JSON string
 
-    //var index = parseInt(actionJSONPayload.actions.name[6])
+    var index = parseInt(actionJSONPayload.actions[0].name)
 
     var message = {
         "response_type" : "in_channel",
-        "text": quotesObj[actionJSONPayload.name],
+        "text": quotesObj[index],
         "replace_original": true
     }
-    sendTest(actionJSONPayload.response_url, message)
+    sendTest(actionJSONPayload.response_url, message);
 })
 
 
@@ -189,7 +189,7 @@ app.post('/slash', function(req, res) {
             highlightNumber++;
             // Output
             outputString = "\nHighlight #" + highlightNumber + ": From \"" + postName + "\" by \"" + postAuthor + "\"\n\n" + quoteParagraph + "\n";
-
+            var strhighlight = highlightNumber.toString();
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
@@ -202,7 +202,7 @@ app.post('/slash', function(req, res) {
                 "color": "#3AA3E3",        // THIS AND THE NEXT PARAMETER WERE ADDED
                 "actions": [
                 {
-                    "name": highlightNumber, //CHANGED
+                    "name": strhighlight, //CHANGED
                     "text": "Send as message",
                     "type": "button",
                     "value": "Send as message"
