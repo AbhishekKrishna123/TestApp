@@ -106,13 +106,8 @@ app.post('/slash', function(req, res) {
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
-<<<<<<< HEAD
                 "text": "`" + quote + "`",
                 "callback-id" : "button-trial",
-=======
-                "text": "`" + quoteParagraph + "`",
-                "callback_id" : "button-trial",
->>>>>>> 77938edb0e5f6c2b2b79165b00d82a415effc3d2
                 "mrkdwn_in": [
                     "text",
                     "pretext"
@@ -188,7 +183,7 @@ app.post('/slash', function(req, res) {
 app.post('/actions', function(req, res){
 
     //res.status(200).end()
-    if (reqBody.token != YOUR_APP_VERIFICATION_TOKEN){
+    if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93'){
         res.status(403).end("Access forbidden")
     }
 
