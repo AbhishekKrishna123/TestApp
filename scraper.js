@@ -59,7 +59,7 @@ module.exports = {
                             Paragraph: {'_': toString(quoteParagraphString)}
                         };
 
-                        res.send("Postname: " + highlight.PostName['_']);
+                        res.send(typeof quoteID[i]);
 
                         tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
                             if(!error){
@@ -68,7 +68,7 @@ module.exports = {
                                     if (!error) {
                                         //res.send(response);
                                         // result contains the entity
-                                        res.send(result.PostName['_'][0] + ", " + result.PostAuthor['_'].valueOf());
+                                        res.send(result.PostName['_'] + ", " + result.PostAuthor['_'].valueOf());
                                     } else {
                                         res.send(response);
                                     }
