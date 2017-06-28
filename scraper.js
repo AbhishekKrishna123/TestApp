@@ -54,10 +54,10 @@ module.exports = {
                         var highlight = {
                             PartitionKey: {'_':'Highlight'},
                             RowKey: {'_': quoteID[i]},
-                            PostName: {'_': toString(postName)},
-                            PostAuthor: {'_': toString(postAuthor)},
-                            StartOffset: {'_': toString(startOffset)},
-                            EndOffset: {'_': toString(endOffset)},
+                            PostName: {'_': postName[0]},
+                            PostAuthor: {'_': postAuthor[0]},
+                            StartOffset: {'_': startOffset[0]},
+                            EndOffset: {'_': endOffset[0]},
                             Paragraph: {'_': toString(quoteParagraphString)}
                         };
 
