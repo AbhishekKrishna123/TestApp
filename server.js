@@ -11,6 +11,9 @@ var bodyParser     =         require("body-parser");
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false }); // THIS LINE WAS ADDED
 
+
+var quote = '' ;
+
 app.use(urlencodedParser); //bodyParser.urlencoded({ extended: false }) was removed 
 app.use(bodyParser.json());
 
@@ -92,7 +95,8 @@ app.post('/actions', urlencodedParser, (req, res) =>{
     res.status(200).end() // best practice to respond with 200 status
     var actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
     var message = {
-        "text": "Button was clicked",
+        "response_type" : "in_channel",
+        "text": quote,
         "replace_original": true
     }
     sendTest(actionJSONPayload.response_url, message)
@@ -154,7 +158,7 @@ app.post('/slash', function(req, res) {
             // Convert the array to a string
             var quoteParagraphString = quoteParagraphRaw.join("");
             // Get only the highlighted section
-            var quote = quoteParagraphString.substring(startOffset, endOffset)
+            quote = quoteParagraphString.substring(startOffset, endOffset) //CHANGED AT 1222
 
             // Get a little bit of content before and after the quote
 
