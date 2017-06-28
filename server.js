@@ -37,6 +37,15 @@ app.get('/test', function(req, res) {
 
 app.post('/slash', function(req, res) {
 
+    var reqBody = req.body
+    if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93')
+    {
+        res.status(403).end("Access forbidden")
+    }
+
+    else{
+
+
     var numPosts = req.body.text || 1;
     var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=" + numPosts + "&to=0&source=quotes&pages=1";
     var output = '' ;//= req.body.response_url + ", ";
@@ -165,6 +174,7 @@ app.post('/slash', function(req, res) {
 
         
     });
+    }
 });
 
 function sendTest(responseURL, JSONmsg/*CHANGED*/) {
