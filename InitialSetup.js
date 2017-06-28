@@ -49,22 +49,13 @@ module.exports = {
                         };
                         // Insert into table
                         tableSvc.insertEntity('MediumHighlights', newUser, function (error, result, response) {
-                          if(!error){
-                            // Entity inserted
-                            res.send("Successfully inserted");
-                          }
-                          else {
-                            tableSvc.retrieveEntity('MediumHighlights', 'User', MediumName, function(error, result, response){
-                                if(!error){
-                                    res.send(response);
-                                    // result contains the entity
-                                    response.send(result.MediumUserID + ", " + result.DisplayName);
-                                }
-                                else {
-                                    res.send(response);
-                                }
-                            });
-                          }
+                            if(!error){
+                                // Entity inserted
+                                res.send("Successfully inserted");
+                            }
+                            else {
+                                res.send(response);
+                            }
                         });
                     }
                     else {

@@ -23,7 +23,7 @@ module.exports = {
             if (!error) {
                 //res.send(response);
                 // result contains the entity
-                res.send(result.MediumUserID + ", " + result.DisplayName);
+                res.send(result.MediumUserID['_'] + ", " + result.DisplayName['_']);
             } else {
                 res.send(response);
             }
