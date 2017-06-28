@@ -181,7 +181,7 @@ function sendTest(responseURL, JSONmsg/*CHANGED*/) {
             request({
                 url: responseURL,
                 method: "POST",
-                json: JSONmsg, //CHANGED
+                payload: JSONmsg, //CHANGED
                 headers: {
                     "content-type": "application/json",
                 },
@@ -203,14 +203,14 @@ app.post('/actions', urlencodedParser, function(req, res){
     else
     {
         var JSONpayload = JSON.parse(req.body.payload)
-        var clickresp = {
+        var payload = {
 
             "response_type" : "in_channel",
             "text" : "Your message",
             "replace_original" : true
         }
 
-        sendTest(JSONpayload.response_url, clickresp);
+        sendTest("https://hooks.slack.com/services/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", payload);
 
         // function sendTest2(JSONmsg/*CHANGED*/) {
         //     request({
