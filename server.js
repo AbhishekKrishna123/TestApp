@@ -96,11 +96,11 @@ app.post('/actions', urlencodedParser, (req, res) =>{
     res.status(200).end() // best practice to respond with 200 status
     var actionJSONPayload = JSON.parse(req.body.payload) // parse URL-encoded payload JSON string
 
-    var index = parseInt(actionJSONPayload.actions.name[7])
+    var index = parseInt(actionJSONPayload.actions.name[6])
 
     var message = {
         "response_type" : "in_channel",
-        "text": "Hello",
+        "text": quotesObj[index],
         "replace_original": true
     }
     sendTest(actionJSONPayload.response_url, message)
