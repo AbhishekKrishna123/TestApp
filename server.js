@@ -166,7 +166,7 @@ app.post('/slash', function(req, res) {
             // Get only the highlighted section
             quote = quoteParagraphString.substring(startOffset, endOffset) //CHANGED AT 1222
 
-            quotesObj[highlightNumber] = quote; //ADDED at 1239
+            quotesObj.push(quote); //ADDED at 1239
             // Get a little bit of content before and after the quote
 
             var offset = 50;
