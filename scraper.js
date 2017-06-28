@@ -62,8 +62,6 @@ module.exports = {
                         batch.insertOrReplaceEntity(highlightsArray[i]);
                     } // End of for loop
 
-                    res.send("For loop done");
-
                     // Execute batch command
                     tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
                         if(!error) {
