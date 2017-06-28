@@ -181,7 +181,7 @@ function sendTest(responseURL, JSONmsg/*CHANGED*/) {
             request({
                 url: responseURL,
                 method: "POST",
-                json: JSONmsg, //CHANGED
+                payload: JSONmsg, //CHANGED
                 headers: {
                     "content-type": "application/json",
                 },
