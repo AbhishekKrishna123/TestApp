@@ -184,31 +184,32 @@ app.post('/slash', function(req, res) {
 app.post('/actions', function(req, res){
 
     //res.status(200).end()
-    if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93'){
+    if (reqBody.token != en4O0pLksumht6WRxvw95Z93)
+    {
         res.status(403).end("Access forbidden")
     }
 
-    else{
-    var clickresp = {
+    else
+    {
+        var clickresp = {
 
         "text" : "Your message",
         "replace_original" : true
-    }
+        }
 
-    sendTest2(clickresp);
+        sendTest2(clickresp);
 
-    function sendTest2(JSONmsg/*CHANGED*/) {
+        function sendTest2(JSONmsg/*CHANGED*/) {
             request({
                 url: response_url,
                 method: "POST",
                 json: JSONmsg, //CHANGED
-                headers: {
+                headers: 
+                {
                     "content-type": "application/json",
                 },
-            }, function(error, response, body)
-            {
-            });
-
+            }, function(error, response, body){}
+            );
         }
     }
 
