@@ -51,7 +51,7 @@ module.exports = {
                         tableSvc.insertOrReplaceEntity('MediumUsers', newUser, function (error, result, response) {
                             if(!error){
                                 // Entity inserted
-                                res.send("Successfully inserted");
+                                res.send("Successfully inserted " + MediumName + "!, User ID: " + MediumUserID);
                             }
                             else {
                                 res.send(response);
