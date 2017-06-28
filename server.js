@@ -37,6 +37,15 @@ app.get('/test', function(req, res) {
 
 app.post('/slash', function(req, res) {
 
+    var reqBody = req.body
+    if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93')
+    {
+        res.status(403).end("Access forbidden")
+    }
+
+    else{
+
+
     var numPosts = req.body.text || 1;
     var highlightsURL = "https://medium.com/_/api/users/9755409acb75/profile/stream?limit=" + numPosts + "&to=0&source=quotes&pages=1";
     var output = '' ;//= req.body.response_url + ", ";
@@ -116,10 +125,10 @@ app.post('/slash', function(req, res) {
                 "color": "#3AA3E3",        // THIS AND THE NEXT PARAMETER WERE ADDED
                 "actions": [
                 {
-                    "name": "PostAction",
+                    "name": "Send as message",
                     "text": "Send as message",
                     "type": "button",
-                    "value": "post"
+                    "value": "Send as message"
                 }
             ]
 
@@ -137,21 +146,21 @@ app.post('/slash', function(req, res) {
             "attachments": attachmentsObj
         }
 
-        sendTest(responseObj); //CHANGED
+        sendTest(response_url, responseObj); //CHANGED
 
-        function sendTest(JSONmsg/*CHANGED*/) {
-            request({
-                url: response_url,
-                method: "POST",
-                json: JSONmsg, //CHANGED
-                headers: {
-                    "content-type": "application/json",
-                },
-            }, function(error, response, body)
-            {
-            });
+        // function sendTest(JSONmsg/*CHANGED*/) {
+        //     request({
+        //         url: response_url,
+        //         method: "POST",
+        //         json: JSONmsg, //CHANGED
+        //         headers: {
+        //             "content-type": "application/json",
+        //         },
+        //     }, function(error, response, body)
+        //     {
+        //     });
 
-        }
+        // }
 
         // function postMsg(){
         //     request({
@@ -165,41 +174,12 @@ app.post('/slash', function(req, res) {
 
         
     });
+    }
 });
 
-// function sendTest(JSONmsg/*CHANGED*/) {
-//             request({
-//                 url: response_url,
-//                 method: "POST",
-//                 json: JSONmsg, //CHANGED
-//                 headers: {
-//                     "content-type": "application/json",
-//                 },
-//             }, function(error, response, body)
-//             {
-//             });
-
-// }
-
-app.post('/actions', function(req, res){
-
-    //res.status(200).end()
-    if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93'){
-        res.status(403).end("Access forbidden")
-    }
-
-    else{
-    var clickresp = {
-
-        "text" : "Your message",
-        "replace_original" : true
-    }
-
-    sendTest2(clickresp);
-
-    function sendTest2(JSONmsg/*CHANGED*/) {
+function sendTest(responseURL, JSONmsg/*CHANGED*/) {
             request({
-                url: response_url,
+                url: responseURL,
                 method: "POST",
                 json: JSONmsg, //CHANGED
                 headers: {
@@ -209,7 +189,41 @@ app.post('/actions', function(req, res){
             {
             });
 
+}
+
+app.post('/actions', urlencodedParser, function(req, res){
+
+    res.status(200).end()
+    var reqBody = req.body
+    if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93')
+    {
+        res.status(403).end("Access forbidden")
+    }
+
+    else
+    {
+        var JSONpayload = JSON.parse(req.body.payload)
+        var clickresp = {
+
+            "response_type" : "in_channel",
+            "text" : "Your message",
+            "replace_original" : true
         }
+
+        sendTest(JSONpayload.response_url, clickresp);
+
+        // function sendTest2(JSONmsg/*CHANGED*/) {
+        //     request({
+        //         url: response_url,
+        //         method: "POST",
+        //         json: JSONmsg, //CHANGED
+        //         headers: 
+        //         {
+        //             "content-type": "application/json",
+        //         },
+        //     }, function(error, response, body){}
+        //     );
+        // }
     }
 
 
