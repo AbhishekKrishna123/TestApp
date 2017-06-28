@@ -7,15 +7,14 @@ const {JSDOM} = jsdom;
 var request = require("request");
 var jsonq=require("jsonq");
 var jquery = require("jquery");
-var bodyParser     =         require("body-parser");
+var bodyParser = require("body-parser");
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false }); // THIS LINE WAS ADDED
-
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 var quote = '' ;
 var quotesObj = [];
 
-app.use(urlencodedParser); //bodyParser.urlencoded({ extended: false }) was removed 
+app.use(urlencodedParser);
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
@@ -93,7 +92,7 @@ app.get('/lol', function(req, res) {
 // }
 
 app.post('/actions', urlencodedParser, (req, res) =>{
-    res.status(200).end() // best practice to respond with 200 status
+    res.status(200).end(); // best practice to respond with 200 status
     var actionJSONPayload = JSON.parse(req.body.payload); // parse URL-encoded payload JSON string
 
     var index = parseInt(actionJSONPayload.actions[0].name);
@@ -113,18 +112,16 @@ app.post('/actions', urlencodedParser, (req, res) =>{
                 ]
             }
         ]
-    }
+    };
     sendTest(actionJSONPayload.response_url, message);
-})
-
-
+});
 
 app.post('/slash', function(req, res) {
 
-    var reqBody = req.body
+    var reqBody = req.body;
     if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93')
     {
-        res.status(403).end("Access forbidden!")
+        res.status(403).end("Access forbidden!");
     }
 
     else{
@@ -136,7 +133,6 @@ app.post('/slash', function(req, res) {
     var response_url =  req.body.response_url;
     var attachmentsObj = [];
     quotesObj = [];
-    
 
     res.send(
         {
@@ -158,9 +154,7 @@ app.post('/slash', function(req, res) {
         // Find all quoteIDs
         var quoteID = object.find('payload').find('references').find('quoteId').value();
 
-        //console.log(numPosts + " most recent highlights by " + userName + " (@" + userHandle + ")");
-
-        
+        //console.log(numPosts + " most recent highlights by " + userName + " (@" + userHandle + ")"); 
 
         for (var i = 0; i < quoteID.length; i++) {
             var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
@@ -182,7 +176,7 @@ app.post('/slash', function(req, res) {
             var offset = 50;
             var paragraphStart = parseInt(startOffset) - offset;
             var paragraphEnd = parseInt(endOffset) + offset;
-            
+
             if (paragraphStart < 0) paragraphStart = 0;
             //if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
 
@@ -209,10 +203,10 @@ app.post('/slash', function(req, res) {
                     "text",
                     "pretext"
                 ],
-                "color": "#3AA3E3",        // THIS AND THE NEXT PARAMETER WERE ADDED
+                "color": "#3AA3E3",
                 "actions": [
                 {
-                    "name": strhighlight, //CHANGED
+                    "name": strhighlight,
                     "text": "Send as message",
                     "type": "button",
                     "value": "Send as message"
@@ -226,9 +220,9 @@ app.post('/slash', function(req, res) {
             output += outputString;
             //console.log(outputString);
         }
-        
+
         var responseObj = {
-            "response_type" : "in_channel", // THIS WAS CHANGED
+            "response_type" : "in_channel",
             "text" : "Here are your highlights:",
             "attachments": attachmentsObj
         }
@@ -264,11 +258,11 @@ app.post('/slash', function(req, res) {
     }
 });
 
-function sendTest(responseURL, JSONmsg/*CHANGED*/) {
+function sendTest(responseURL, JSONmsg) {
             request({
                 url: responseURL,
                 method: "POST",
-                json: JSONmsg, //CHANGED
+                json: JSONmsg,
                 headers: {
                     "content-type": "application/json",
                 },
