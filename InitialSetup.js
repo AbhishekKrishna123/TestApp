@@ -51,7 +51,18 @@ module.exports = {
                         tableSvc.insertEntity('MediumHighlights', newUser, function (error, result, response) {
                           if(!error){
                             // Entity inserted
-                            res.send("Successfully inserted");
+                            //res.send("Successfully inserted");
+
+                            tableSvc.retrieveEntity('TestTable', 'User', MediumName, function(error, result, response){
+                                if(!error){
+                                    //res.send(response);
+                                    // result contains the entity
+                                    response.send(result.MediumUserID + ", " + result.DisplayName);
+                                }
+                                else {
+                                    res.send(response);
+                                }
+                            });
                           }
                           else {
                             tableSvc.retrieveEntity('TestTable', 'User', MediumName, function(error, result, response){
