@@ -19,11 +19,11 @@ module.exports = {
         //     }
         // });
 
-        tableSvc.retrieveEntity('TestTable', 'User', "request.query.MediumName", function (error, result, response){
+        tableSvc.retrieveEntity('TestTable', 'User', req.query.MediumName, function (error, result, response){
             if(!error){
                 res.send(response);
                 // result contains the entity
-                //response.send(result.MediumUserID + ", " + result.DisplayName);
+                res.send(result.MediumUserID + ", " + result.DisplayName);
             }
             else {
                 res.send(response);
