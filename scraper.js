@@ -18,13 +18,13 @@ module.exports = {
                 var userID = result.MediumUserID['_'];
 
                 // The API URL from which returns JSON data of highlights
-                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=3&to=0&source=quotes&pages=1";
+                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=10000&to=0&source=quotes&pages=1";
 
                 request(highlightsURL, function (error, response, body) {
 
                     var newBody = "";
                     // Trim out random garbage characters in the beginning of the body (non-JSON)
-                    for (i=16; i<body.length; i++) {
+                    for (var i=16; i<body.length; i+=1) {
                         newBody += body[i];
                     }
 
@@ -93,7 +93,7 @@ module.exports = {
                     tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
                         if(!error) {
                             // Batch completed
-                            res.send("Successfully inserted batch!");
+                            res.send("Successfully inserted batch: " + batch.size());
                         }
                         else {
                             res.send(response);
