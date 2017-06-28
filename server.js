@@ -112,7 +112,7 @@ app.post('/actions', urlencodedParser, (req, res) =>{
             {
                 "color": "#1466ad",
                 "title": details,//">>> A Quote from Medium",
-                "text" : "_" + quotesObj[index-1] + "_" + "\nLink to post: " + links[index-1].getAttribute("href");
+                "text" : "_" + quotesObj[index-1] + "_" + "\nLink to post: " + links[index-1],
                 "mrkdwn_in" : [
                     "text",
                     "title"
@@ -136,7 +136,10 @@ app.post('/slash', function(req, res) {
         profileURL = "https://medium.com/@rahulkayala/highlights";
         JSDOM.fromURL(profileURL).then(dom => {
             var document = dom.window.document;
-            links = document.getElementsByClassName(" quoteItem-content");
+            links = document.getElementsByClassName(" quoteItem-content").getAttribute("href");
+
+
+
         });
 
         var numPosts = req.body.text || 1;
