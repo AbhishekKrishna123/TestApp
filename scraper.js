@@ -14,7 +14,7 @@ module.exports = {
                 // result contains the entity
                 var userID = result.MediumUserID['_'];
 
-                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=3&to=0&source=quotes&pages=1";
+                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=1&to=0&source=quotes&pages=1";
 
                 request(highlightsURL, function (error, response, body) {
 
@@ -58,20 +58,22 @@ module.exports = {
                             EndOffset: {'_': endOffset}
                         };
 
-                        highlightsArray.push(highlight);
-                        batch.insertOrReplaceEntity(highlightsArray[i]);
+                        //highlightsArray.push(highlight);
+                        batch.insertOrReplaceEntity(highlight);
+
+                        // Execute batch command
+                        tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
+                            if(!error) {
+                                // Batch completed
+                                res.send(response);
+                            }
+                            else {
+                                res.send(response);
+                            }
+                        });
                     } // End of for loop
 
-                    // Execute batch command
-                    tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
-                        if(!error) {
-                            // Batch completed
-                            res.send("SUCCESS\n" + response);
-                        }
-                        else {
-                            res.send("FAIL\n" + response);
-                        }
-                    });
+                    
                 });
            }
            else {
