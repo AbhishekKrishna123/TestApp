@@ -48,10 +48,10 @@ module.exports = {
                             DisplayName: {'_': DisplayName}
                         };
                         // Insert into table
-                        tableSvc.insertOrReplaceEntity('MediumHighlights', newUser, {echoContent: true}, function (error, result, response) {
+                        tableSvc.insertOrReplaceEntity('MediumHighlights', newUser, function (error, result, response) {
                             if(!error){
                                 // Entity inserted
-                                res.send("Successfully inserted " + result.DisplayName['_']);
+                                res.send("Successfully inserted");
                             }
                             else {
                                 res.send(response);
