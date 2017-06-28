@@ -102,7 +102,7 @@ app.post('/actions', urlencodedParser, (req, res) =>{
     var details_full = actionJSONPayload.original_message.attachments[index-1].pretext;
     var details_len =  details_full.length;
 
-    var details = details_full.substring(14, details_len).replace('*', '').replace(/_/g, '').replace('*', '');
+    var details = details_full.substring(14, details_len).replace('*', '').replace(/_/g, '').replace('*', '').replace('*', '');
 
     var message = {
         "response_type" : "in_channel",
