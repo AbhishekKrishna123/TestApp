@@ -100,11 +100,11 @@ app.post('/actions', urlencodedParser, (req, res) =>{
     var s_index = actionJSONPayload.actions[0].name;
     var message = {
         "response_type" : "in_channel",
-        "text": "A quote from Medium",
+        //"text": "A quote from Medium",
         "replace_original": true,
         "attachments" : [
             {
-                "color": "#36a64f",
+                "color": "#000000",
                 "pretext": "A Quote from Medium",
                 "text" : quotesObj[index-1]
             }
