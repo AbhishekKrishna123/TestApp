@@ -51,7 +51,11 @@ module.exports = {
                         // Create an object and add it to array
                         var highlight = {
                             PartitionKey: {'_':'Highlight'},
-                            RowKey: {'_': "1"}
+                            RowKey: {'_': "1"},
+                            PostName: {'_': toString(postName)},
+                            PostAuthor: {'_': toString(postAuthor)},
+                            StartOffset: {'_': toString(startOffset)},
+                            EndOffset: {'_': toString(endOffset)}
                         };
 
                         tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
