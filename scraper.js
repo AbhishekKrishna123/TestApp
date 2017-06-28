@@ -70,7 +70,7 @@ module.exports = {
                                     if (!error) {
                                         //res.send(response);
                                         // result contains the entity
-                                        res.send(result.PostName['_'] + ", " + result.PostAuthor['_']);
+                                        res.send(typeof result.PostName['_'] + ", " + toString(result.PostAuthor['_']));
                                     } else {
                                         res.send(response);
                                     }
