@@ -1,6 +1,6 @@
 ﻿var express = require('express');
 var app = express();
-var port = process.env.port || 1337
+var port = process.env.port || 1337;
 
 const jsdom = require("jsdom");
 const {JSDOM} = jsdom;
@@ -9,7 +9,7 @@ var jsonq=require("jsonq");
 var jquery = require("jquery");
 var bodyParser     =         require("body-parser");
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false }) // THIS LINE WAS ADDED
+var urlencodedParser = bodyParser.urlencoded({ extended: false }); // THIS LINE WAS ADDED
 
 app.use(urlencodedParser); //bodyParser.urlencoded({ extended: false }) was removed 
 app.use(bodyParser.json());
@@ -84,10 +84,11 @@ app.post('/slash', function(req, res) {
             // Get a little bit of content before and after the quote
 
             var offset = 50;
-            var paragraphStart = startOffset-offset, paragraphEnd = endOffset+offset;
+            var paragraphStart = parseInt(startOffset) - offset;
+            var paragraphEnd = parseInt(endOffset) + offset;
             
             if (paragraphStart < 0) paragraphStart = 0;
-            if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
+            //if (paragraphEnd > quoteParagraphString.length) paragraphEnd = quoteParagraphString.length;
 
             var quoteParagraph = "";
             if (paragraphStart != 0) quoteParagraph += "...";
@@ -106,8 +107,13 @@ app.post('/slash', function(req, res) {
             // Formatting
             var obj = {
                 "pretext": "*Highlight #" + highlightNumber + "* from *" + postName + "* by _" + postAuthor + "_",
+<<<<<<< HEAD
                 "text": "`" + quote + "`",
                 "callback-id" : "button-trial",
+=======
+                "text": startingPart + "*_" + quote + "_*" + endingPart,
+                "callback_id" : "button-trial",
+>>>>>>> 68c869bbbe41e2b611c8c0ea558da18ec8168b54
                 "mrkdwn_in": [
                     "text",
                     "pretext"
