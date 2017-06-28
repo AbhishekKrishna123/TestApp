@@ -14,7 +14,7 @@ module.exports = {
                 // result contains the entity
                 var userID = result.MediumUserID['_'];
 
-                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=3&to=0&source=quotes&pages=1";
+                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=1&to=0&source=quotes&pages=1";
 
                 request(highlightsURL, function (error, response, body) {
 
@@ -58,7 +58,7 @@ module.exports = {
                             EndOffset: {'_': endOffset}
                         };
 
-                        highlightsArray.push(highlight);
+                        //highlightsArray.push(highlight);
                         batch.insertOrReplaceEntity(highlight);
 
                         // Execute batch command
