@@ -58,7 +58,7 @@ module.exports = {
                         for (var i=0; i < Math.min(5, highlightObjects.length); i++) {
                             responseString += "<h3>Post: " + highlightObjects[relevanceScoreArray[i].index].PostName['_'] + 
                                                 "<br>Author: " + highlightObjects[relevanceScoreArray[i].index].PostAuthor['_'] +
-                                                "</h3><br><br><p>" + highlightObjects[relevanceScoreArray[i].index].Paragraph['_'] + "<br><br><br>";
+                                                "</h3><p>" + highlightObjects[relevanceScoreArray[i].index].Paragraph['_'] + "<br><br><br>";
                             //JSON.stringify(highlightObjects[relevanceScoreArray[i].index]);
                         }
                         res.set('Content-Type', 'text/html');
