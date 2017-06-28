@@ -119,7 +119,7 @@ module.exports = {
                         tableSvc.executeBatch('MediumHighlights', batchArr[currentBatch], function (error, result, response) {
                             if(!error) {
                                 // Batch completed
-                                if (currentBatch >= totalbatch) {
+                                if (currentBatch >= totalBatch) {
                                     // All batches completed
                                     res.send("Successfully inserted batch");
                                 } else {
