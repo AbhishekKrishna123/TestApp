@@ -1,4 +1,6 @@
 module.exports = {
+    // Scraper function scrapes users' highlights using their API
+    // PARAMETERS: MediumName
     Scraper: function(req, res) {
         // Require this stuff
         var request = require("request");
@@ -7,6 +9,7 @@ module.exports = {
 
         var MediumName = req.query.MediumName;
 
+        // Initialize Azure Table Service
         var tableSvc = azure.createTableService();
 
         tableSvc.retrieveEntity('MediumHighlights', 'User', MediumName, function(error, result, response){
@@ -14,17 +17,16 @@ module.exports = {
                 // result contains the entity
                 var userID = result.MediumUserID['_'];
 
+                // The API URL from which returns JSON data of highlights
                 var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=3&to=0&source=quotes&pages=1";
 
                 request(highlightsURL, function (error, response, body) {
 
                     var newBody = "";
                     // Trim out random garbage characters in the beginning of the body (non-JSON)
-                    for (var i=16; i<body.length; i++) {
-                        newBody += body[i];
-                    }
+                    newBody = body.substring(16, body.length-1);
 
-                    // Convert to a JSON object for using jsonQ functions
+                    // Convert to a JSON object and bind jsonQ to it
                     var object = jsonq(newBody);
 
                     // Find all quoteIDs
@@ -32,6 +34,7 @@ module.exports = {
 
                     // Batch operation for inserting all highlights together
                     var batch = new azure.TableBatch();
+                    // Array to store highlight objects
                     var highlightsArray = [];
 
                     for (var i = 0; i < quoteID.length; i++) {
@@ -58,8 +61,6 @@ module.exports = {
                             EndOffset: {'_': endOffset[0]},
                             Paragraph: {'_': toString(quoteParagraphString)}
                         };
-
-                        //res.send(typeof quoteID[i]);
 
                         // id = "";
                         // id += quoteID[i];
@@ -90,7 +91,7 @@ module.exports = {
                     tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
                         if(!error) {
                             // Batch completed
-                            res.send("Successfully inserted!");
+                            res.send("Successfully inserted batch!");
                         }
                         else {
                             res.send(response);
