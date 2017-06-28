@@ -31,8 +31,8 @@ module.exports = {
                     var quoteID = object.find('payload').find('references').find('quoteId').value();
 
                     // Batch operation for inserting all highlights together
-                    var batch = new azure.TableBatch();
-                    var highlightsArray = [];
+                    //var batch = new azure.TableBatch();
+                    //var highlightsArray = [];
 
                     for (var i = 0; i < quoteID.length; i++) {
                         var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
@@ -58,22 +58,30 @@ module.exports = {
                             EndOffset: {'_': endOffset}
                         };
 
-                        //highlightsArray.push(highlight);
-                        batch.insertOrReplaceEntity(highlight);
-
-                        // Execute batch command
-                        tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
-                            if(!error) {
-                                // Batch completed
-                                res.send(response);
+                        tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
+                            if(!error){
+                                // Entity inserted
+                                res.send("Successfully inserted");
                             }
                             else {
                                 res.send(response);
                             }
                         });
+
+                        // highlightsArray.push(highlight);
+                        // batch.insertOrReplaceEntity(highlightsArray[i]);
                     } // End of for loop
 
-                    
+                    // Execute batch command
+                    // tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
+                    //     if(!error) {
+                    //         // Batch completed
+                    //         res.send("SUCCESS\n" + response);
+                    //     }
+                    //     else {
+                    //         res.send("FAIL\n" + response);
+                    //     }
+                    // });
                 });
            }
            else {
