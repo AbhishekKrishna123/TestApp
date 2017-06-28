@@ -66,7 +66,7 @@ module.exports = {
                         tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
                             if(!error){
                                 // Entity inserted
-                                tableSvc.retrieveEntity('MediumHighlights', 'Highlight', quoteID[i][0], function (error, result, response) {
+                                tableSvc.retrieveEntity('MediumHighlights', 'Highlight', toString(quoteID[i]), function (error, result, response) {
                                     if (!error) {
                                         //res.send(response);
                                         // result contains the entity
