@@ -14,8 +14,6 @@ module.exports = {
                 // result contains the entity
                 var userID = result.MediumUserID['_'];
 
-                res.send(userID);
-
                 var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=3&to=0&source=quotes&pages=1";
 
                 request(highlightsURL, function (error, response, body) {
@@ -37,6 +35,7 @@ module.exports = {
                     var highlightsArray = [];
 
                     for (var i = 0; i < quoteID.length; i++) {
+                        res.send(quoteID[i]);
                         var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
                         var postName = object.find('payload').find('references').find('Post').find(postID).find('title').value();
                         var postAuthorID = object.find('payload').find('references').find('Post').find(postID).find('creatorId').value();
