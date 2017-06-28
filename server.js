@@ -181,11 +181,11 @@ app.post('/slash', function(req, res) {
 
 // }
 
-app.post('/actions', function(req, res){
+app.post('/actions', urlencodedParser, function(req, res){
 
     res.status(200).end()
     var reqBody = req.body
-    if (reqBody.token != en4O0pLksumht6WRxvw95Z93)
+    if (reqBody.token != 'en4O0pLksumht6WRxvw95Z93')
     {
         res.status(403).end("Access forbidden")
     }
