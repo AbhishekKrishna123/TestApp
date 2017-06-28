@@ -12,13 +12,13 @@ module.exports = {
         // Initialize Azure Table Service
         var tableSvc = azure.createTableService();
 
-        tableSvc.retrieveEntity('MediumHighlights', 'User', MediumName, function(error, result, response){
+        tableSvc.retrieveEntity('MediumUsers', 'User', MediumName, function(error, result, response){
             if(!error){
                 // result contains the entity
-                var userID = result.MediumUserID['_'];
+                var MediumUserID = result.MediumMediumUserID['_'];
 
                 // The API URL from which returns JSON data of highlights
-                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=100&to=0&source=quotes&pages=1";
+                var highlightsURL = "https://medium.com/_/api/users/" + MediumUserID + "/profile/stream?limit=100&to=0&source=quotes&pages=1";
 
                 request(highlightsURL, function (error, response, body) {
 
@@ -55,13 +55,13 @@ module.exports = {
 
                         // Create an object and add it to array
                         var highlight = {
-                            PartitionKey: {'_':'Highlight'},
+                            PartitionKey: {'_': MediumUserID},
                             RowKey: {'_': quoteID[i]},
                             PostName: {'_': postName[0]},
                             PostAuthor: {'_': postAuthor[0]},
                             StartOffset: {'_': startOffset[0]},
                             EndOffset: {'_': endOffset[0]},
-                            Paragraph: {'_': toString(quoteParagraphString)}
+                            Paragraph: {'_': toString(quoteParagraphString)},
                         };
 
                         // id = "";

@@ -19,7 +19,7 @@ module.exports = {
         //     }
         // });
 
-        tableSvc.retrieveEntity('MediumHighlights', 'User', req.query.MediumName, function (error, result, response) {
+        tableSvc.retrieveEntity('MediumUsers', 'User', req.query.MediumName, function (error, result, response) {
             if (!error) {
                 //res.send(response);
                 // result contains the entity

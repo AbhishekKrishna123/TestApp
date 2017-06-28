@@ -37,7 +37,7 @@ module.exports = {
                 var tableSvc = azure.createTableService();
                 //res.send("Table service created.");
                 // Create table if it doesn't exist
-                tableSvc.createTableIfNotExists('MediumHighlights', function(error, result, response){
+                tableSvc.createTableIfNotExists('MediumUsers', function(error, result, response){
                     if(!error){
                         //res.send("Table created.");
                         // Create an entity
@@ -48,7 +48,7 @@ module.exports = {
                             DisplayName: {'_': DisplayName}
                         };
                         // Insert into table
-                        tableSvc.insertOrReplaceEntity('MediumHighlights', newUser, function (error, result, response) {
+                        tableSvc.insertOrReplaceEntity('MediumUsers', newUser, function (error, result, response) {
                             if(!error){
                                 // Entity inserted
                                 res.send("Successfully inserted");
