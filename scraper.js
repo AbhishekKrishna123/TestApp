@@ -35,7 +35,6 @@ module.exports = {
                     var highlightsArray = [];
 
                     for (var i = 0; i < quoteID.length; i++) {
-                        res.send(quoteID[i]);
                         var postID = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('postId').value();
                         var postName = object.find('payload').find('references').find('Post').find(postID).find('title').value();
                         var postAuthorID = object.find('payload').find('references').find('Post').find(postID).find('creatorId').value();
@@ -49,7 +48,7 @@ module.exports = {
                         // Get only the highlighted section
                         var quote = quoteParagraphString.substring(startOffset, endOffset)
 
-                        // Create an object and insert it into the table
+                        // Create an object and add it to array
                         var highlight = {
                             PartitionKey: {'_':'Highlight'},
                             RowKey: {'_': quoteID[i]},
@@ -63,10 +62,15 @@ module.exports = {
                         batch.insertOrReplaceEntity(highlightsArray[i]);
                     } // End of for loop
 
+                    res.send("For loop done");
+
                     // Execute batch command
                     tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
                         if(!error) {
                             // Batch completed
+                            res.send(response);
+                        }
+                        else {
                             res.send(response);
                         }
                     });
