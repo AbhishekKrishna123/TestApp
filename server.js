@@ -112,7 +112,7 @@ app.post('/actions', urlencodedParser, (req, res) =>{
             {
                 "color": "#1466ad",
                 "title": details,//">>> A Quote from Medium",
-                "text" : "_" + quotesObj[index-1] + "_" + "\n`Link to post: " + all_links[index-1] + "`",
+                "text" : "_" + quotesObj[index-1] + "_" + "\n*>> Link to original post: *" + all_links[index-1],
                 "mrkdwn_in" : [
                     "text",
                     "title"
