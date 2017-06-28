@@ -4,7 +4,7 @@ module.exports = {
     Scraper: function(req, res) {
         // Require this stuff
         var request = require("request");
-        var jsonq=require("jsonq");
+        var jsonq = require("jsonq");
         var azure = require('azure-storage');
 
         var MediumName = req.query.MediumName;

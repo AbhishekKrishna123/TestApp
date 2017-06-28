@@ -335,3 +335,8 @@ app.get('/scraper', function (req, res) {
     var entity = require("./scraper");
     entity.Scraper(req, res);
 });
+
+app.get('/search', function (req, res) {
+    var search = require("./search");
+    search.Search(req, res);
+});
