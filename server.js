@@ -205,9 +205,9 @@ app.post('/actions', urlencodedParser, function(req, res){
         var JSONpayload = JSON.parse(req.body.payload)
         var payload = {
 
-            "response_type" : "in_channel",
+            //"response_type" : "in_channel",
             "text" : "Your message",
-            "replace_original" : true
+            //"replace_original" : true
         }
 
         sendTest("https://hooks.slack.com/services/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", payload);
