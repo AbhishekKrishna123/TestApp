@@ -69,7 +69,7 @@ module.exports = {
                         var endOffset = object.find('payload').find('references').find('Quote').find(quoteID[i]).find('endOffset').value();
 
                         // Convert the array to a string
-                        var quoteParagraphString = quoteParagraphRaw.join("");
+                        var quoteParagraphString = quoteParagraphRaw[0];
                         // Get only the highlighted section
                         var quote = quoteParagraphString.substring(startOffset, endOffset)
 
@@ -81,7 +81,7 @@ module.exports = {
                             PostAuthor: {'_': postAuthor[0]},
                             StartOffset: {'_': startOffset[0]},
                             EndOffset: {'_': endOffset[0]},
-                            Paragraph: {'_': toString(quoteParagraphString)},
+                            Paragraph: {'_': quoteParagraphString},
                         };
 
                         // id = "";
