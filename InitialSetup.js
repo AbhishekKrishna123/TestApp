@@ -1,6 +1,5 @@
 // Initial Setup of tables when user sets up the app
-
-// PARAMETERS: MediumName
+// PARAMETERS: MediumName => medium username of the person
 
 module.exports = {
     Setup: function (req, res) {
@@ -21,9 +20,7 @@ module.exports = {
                 var elem = document.getElementsByClassName("hero-title");
                 var DisplayName = elem[0].innerHTML;
 
-                ////////////////////////////////////////////////
-                // Save the details to the User Table in Azure //
-                ////////////////////////////////////////////////
+                // Save the details to the User Table
                 var tableSvc = azure.createTableService();
 
                 var newUser = {
