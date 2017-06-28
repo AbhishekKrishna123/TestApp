@@ -18,7 +18,7 @@ module.exports = {
                 var userID = result.MediumUserID['_'];
 
                 // The API URL from which returns JSON data of highlights
-                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=10000&to=0&source=quotes&pages=1";
+                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=100&to=0&source=quotes&pages=1";
 
                 request(highlightsURL, function (error, response, body) {
 
