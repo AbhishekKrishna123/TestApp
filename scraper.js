@@ -14,7 +14,7 @@ module.exports = {
                 // result contains the entity
                 var userID = result.MediumUserID['_'];
 
-                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=5&to=0&source=quotes&pages=1";
+                var highlightsURL = "https://medium.com/_/api/users/" + userID + "/profile/stream?limit=1&to=0&source=quotes&pages=1";
 
                 request(highlightsURL, function (error, response, body) {
 
@@ -53,7 +53,7 @@ module.exports = {
                         // Create an object and add it to array
                         var highlight = {
                             PartitionKey: {'_':'Highlight'},
-                            RowKey: {'_': toString(quoteID[i])},
+                            RowKey: {'_': quoteID[i]},
                             PostName: {'_': toString(postName)},
                             PostAuthor: {'_': toString(postAuthor)},
                             StartOffset: {'_': toString(startOffset)},
@@ -63,32 +63,30 @@ module.exports = {
 
                         list += "\n" + quoteID[i];
 
-                        // tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
-                        //     if(!error){
-                        //         // Entity inserted
-                        //         res.send("Successfully inserted");
-                        //     }
-                        //     else {
-                        //         res.send(response);
-                        //     }
-                        // });
+                        tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, {echoContent: true}, function (error, result, response) {
+                            if(!error){
+                                // Entity inserted
+                                res.send(result.quoteID['_'] + result.PostName['_'] + result.PostAuthor['_']);
+                            }
+                            else {
+                                res.send(response);
+                            }
+                        });
 
                         highlightsArray.push(highlight);
                         batch.insertOrReplaceEntity(highlightsArray[i]);
                     } // End of for loop
 
-                    res.send(list);
-
                     // Execute batch command
-                    tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
-                        if(!error) {
-                            // Batch completed
-                            res.send("Successfully inserted!");
-                        }
-                        else {
-                            res.send(response);
-                        }
-                    });
+                    // tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
+                    //     if(!error) {
+                    //         // Batch completed
+                    //         res.send("Successfully inserted!");
+                    //     }
+                    //     else {
+                    //         res.send(response);
+                    //     }
+                    // });
                 });
            }
            else {
