@@ -136,11 +136,11 @@ app.post('/slash', function(req, res) {
         profileURL = "https://medium.com/@rahulkayala/highlights";
         JSDOM.fromURL(profileURL).then(dom => {
             var document = dom.window.document;
-            links = document.getElementsByClassName(" quoteItem-content").getAttribute("href");
+            links = document.getElementsByClassName(" quoteItem-content");
 
             for (var i = 0; i < links.length; i=i+1)
             {
-                all_links.push(links[i]);
+                all_links.push(links[i].getAttribute("href"));
             }
 
 
