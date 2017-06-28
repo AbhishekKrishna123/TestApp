@@ -13,7 +13,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 var quote = '' ;
 var quotesObj = [];
-var links = [];
+var links;
 
 app.use(urlencodedParser);
 app.use(bodyParser.json());
@@ -112,7 +112,7 @@ app.post('/actions', urlencodedParser, (req, res) =>{
             {
                 "color": "#1466ad",
                 "title": details,//">>> A Quote from Medium",
-                "text" : "_" + quotesObj[index-1] + "_" + "\nLink to post: " + links[index-1],
+                "text" : "_" + quotesObj[index-1] + "_" + "\nLink to post: " + links[index-1].toString,
                 "mrkdwn_in" : [
                     "text",
                     "title"
