@@ -137,21 +137,21 @@ app.post('/slash', function(req, res) {
             "attachments": attachmentsObj
         }
 
-        sendTest(responseObj); //CHANGED
+        sendTest(response_url, responseObj); //CHANGED
 
-        function sendTest(JSONmsg/*CHANGED*/) {
-            request({
-                url: response_url,
-                method: "POST",
-                json: JSONmsg, //CHANGED
-                headers: {
-                    "content-type": "application/json",
-                },
-            }, function(error, response, body)
-            {
-            });
+        // function sendTest(JSONmsg/*CHANGED*/) {
+        //     request({
+        //         url: response_url,
+        //         method: "POST",
+        //         json: JSONmsg, //CHANGED
+        //         headers: {
+        //             "content-type": "application/json",
+        //         },
+        //     }, function(error, response, body)
+        //     {
+        //     });
 
-        }
+        // }
 
         // function postMsg(){
         //     request({
@@ -167,19 +167,19 @@ app.post('/slash', function(req, res) {
     });
 });
 
-// function sendTest(JSONmsg/*CHANGED*/) {
-//             request({
-//                 url: response_url,
-//                 method: "POST",
-//                 json: JSONmsg, //CHANGED
-//                 headers: {
-//                     "content-type": "application/json",
-//                 },
-//             }, function(error, response, body)
-//             {
-//             });
+function sendTest(responseURL, JSONmsg/*CHANGED*/) {
+            request({
+                url: responseURL,
+                method: "POST",
+                json: JSONmsg, //CHANGED
+                headers: {
+                    "content-type": "application/json",
+                },
+            }, function(error, response, body)
+            {
+            });
 
-// }
+}
 
 app.post('/actions', urlencodedParser, function(req, res){
 
@@ -192,26 +192,27 @@ app.post('/actions', urlencodedParser, function(req, res){
 
     else
     {
+        var JSONpayload = JSON.parse(req.body.payload)
         var clickresp = {
 
         "text" : "Your message",
         "replace_original" : true
         }
 
-        sendTest2(clickresp);
+        sendTest(JSONpayload.response_url, clickresp);
 
-        function sendTest2(JSONmsg/*CHANGED*/) {
-            request({
-                url: response_url,
-                method: "POST",
-                json: JSONmsg, //CHANGED
-                headers: 
-                {
-                    "content-type": "application/json",
-                },
-            }, function(error, response, body){}
-            );
-        }
+        // function sendTest2(JSONmsg/*CHANGED*/) {
+        //     request({
+        //         url: response_url,
+        //         method: "POST",
+        //         json: JSONmsg, //CHANGED
+        //         headers: 
+        //         {
+        //             "content-type": "application/json",
+        //         },
+        //     }, function(error, response, body){}
+        //     );
+        // }
     }
 
 
