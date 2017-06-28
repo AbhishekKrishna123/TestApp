@@ -59,40 +59,43 @@ module.exports = {
                             Paragraph: {'_': toString(quoteParagraphString)}
                         };
 
-                        res.send(typeof quoteID[i]);
+                        //res.send(typeof quoteID[i]);
 
-                        tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
-                            if(!error){
-                                // Entity inserted
-                                tableSvc.retrieveEntity('MediumHighlights', 'Highlight', toString(quoteID[i]), function (error, result, response) {
-                                    if (!error) {
-                                        //res.send(response);
-                                        // result contains the entity
-                                        res.send(result.PostName['_'] + ", " + result.PostAuthor['_'].valueOf());
-                                    } else {
-                                        res.send(response);
-                                    }
-                                });
-                            }
-                            else {
-                                res.send(response);
-                            }
-                        });
+                        // id = "";
+                        // id += quoteID[i];
+
+                        // tableSvc.insertOrReplaceEntity('MediumHighlights', highlight, function (error, result, response) {
+                        //     if(!error){
+                        //         // Entity inserted
+                        //         tableSvc.retrieveEntity('MediumHighlights', 'Highlight', id, function (error, result, response) {
+                        //             if (!error) {
+                        //                 //res.send(response);
+                        //                 // result contains the entity
+                        //                 res.send(result.PostName['_'] + ", " + result.PostAuthor['_']);
+                        //             } else {
+                        //                 res.send(response);
+                        //             }
+                        //         });
+                        //     }
+                        //     else {
+                        //         res.send(response);
+                        //     }
+                        // });
 
                         highlightsArray.push(highlight);
                         batch.insertOrReplaceEntity(highlightsArray[i]);
                     } // End of for loop
 
-                    // Execute batch command
-                    // tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
-                    //     if(!error) {
-                    //         // Batch completed
-                    //         res.send("Successfully inserted!");
-                    //     }
-                    //     else {
-                    //         res.send(response);
-                    //     }
-                    // });
+                    Execute batch command
+                    tableSvc.executeBatch('MediumHighlights', batch, function (error, result, response) {
+                        if(!error) {
+                            // Batch completed
+                            res.send("Successfully inserted!");
+                        }
+                        else {
+                            res.send(response);
+                        }
+                    });
                 });
            }
            else {
